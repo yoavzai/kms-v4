@@ -4,15 +4,14 @@ const orders = [
         date: "2005-05-05",
         subtotal: 88.88,
         items: [
-        {
-            product:
             {
-            id: "1",
-            descirption: "Old TV",
-            price: 44.44
-            },
-            quantity: 2
-        }
+                product: {
+                    id: "1",
+                    descirption: "Old TV",
+                    price: 44.44
+                },
+                quantity: 2
+            }
         ]
     },
     {
@@ -20,15 +19,14 @@ const orders = [
         date: "2005-05-05",
         subtotal: 121.22,
         items: [
-        {
-            product:
             {
-            id: "2",
-            descirption: "Old Guitar",
-            price: 121.22
-            },
-            quantity: 1
-        }
+                product: {
+                    id: "2",
+                    descirption: "Old Guitar",
+                    price: 121.22
+                },
+                quantity: 1
+            }
         ]
     }
 ]

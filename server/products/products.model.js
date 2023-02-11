@@ -32,16 +32,14 @@ function getAllProducts() {
 }
 
 function getProductsByPriceRange(min, max) {
-  return products.filter(p => {
-    return p.price >= min && p.price <= max
-  })
+  return products.filter(({price}) => price >= min && price <= max)
 }
 
 function addNewProduct(id, description, price) {
   const newProduct = {
-    id: id,
-    description: description,
-    price: price,
+    id,
+    description,
+    price,
     reviews: []
   }
   products.push(newProduct)
@@ -51,16 +49,11 @@ function addNewProduct(id, description, price) {
 function addNewReview(id, rating, comment) {
   const product = products.find(p => p.id === id)
   if (product) {
-    const review = {
-      rating: rating,
-      comment: comment
-    }
+    const review = { rating, comment }
     product.reviews.push(review)
     return review
   }
-  else {
-    return null
-  }
+  return null
 }
 
 module.exports = {
