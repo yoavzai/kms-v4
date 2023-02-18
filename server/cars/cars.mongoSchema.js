@@ -3,13 +3,13 @@ const { mongoose } = require('mongoose')
 
 const EngineSchema = new mongoose.Schema({
     name: String,
-    year: Date,
+    year: Number,
     volume: Number
   });
   
   const CarSchema = new mongoose.Schema({
     brand: String,
-    year: Date,
+    year: Number,
     engines: {
       type: [EngineSchema],
       default: [],
