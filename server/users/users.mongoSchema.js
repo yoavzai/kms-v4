@@ -1,36 +1,19 @@
 const { mongoose } = require('mongoose')
 
 
-const LanguagesSchema = new mongoose.Schema({
-  language: String,
-  skill: {
-    type: String,
-    enum: [ 'basic', 'fluent', 'native' ],
-  },
-});
-
 const UserSchema = new mongoose.Schema({
-  name: String,
-  age: {
-    type: Number,
-    index: true,
-  },
-  languages: {
-    type: [LanguagesSchema],
-    default: [],
-  },
-  contacts: {
-    email: String,
-    phones: [String],
-  },
-  gender: {
+  username: String,
+  passhash: String,
+  email: String,
+  first_name: String,
+  last_name: String,
+  role: {
     type: String,
-    enum: ['male', 'female', 'ladyboy'],
-  },
-  someMixed: {
-    type: mongoose.Schema.Types.Mixed,
-    description: 'Can be any mixed type, that will be treated as JSON GraphQL Scalar Type',
-  },
+    enum: ['admin', 'student', 'guest'],
+  } ,
+  date_created: Date,
+  date_updated: Date,
+  is_deleted: Boolean
 });
 
 const UserModel = mongoose.model('User', UserSchema);

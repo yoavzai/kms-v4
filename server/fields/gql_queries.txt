@@ -1,0 +1,447 @@
+mutation {
+  fieldsCreateMany (
+    records: [
+      {
+        name: "individual_details"
+        fields: [  
+          {
+            type: dropdown,
+            key: "gender"
+            dropdown_options: ["MALE", "FEMALE"]
+            mandatory: false
+          },
+          {
+            type: date,
+            key: "birth_date"
+            mandatory: false
+          },
+          {
+            type: number,
+            key: "age"
+            mandatory: false
+          },
+          {
+            type: dropdown,
+            key: "marital_status"
+            dropdown_options: ["Single", "Married", "Divorced", "Widower"]
+            mandatory: false
+          },
+          {
+            type: dropdown,
+            key: "physical_health"
+            dropdown_options: ["Sick", "Healthy"]
+            mandatory: false
+          },
+          {
+            type: dropdown,
+            key: "economic_status"
+            dropdown_options: ["Above Average", "Average", "Bellow Average"]
+            mandatory: false
+          },
+          {
+            type: dropdown,
+            key: "employment_status"
+            dropdown_options: ["Full-time", "Part-time", "Unemployed", "Retired", "Housewife", "Volunteer", "Student"]
+            mandatory: false
+          },
+          {
+            type: dropdown,
+            key: "religion"
+            dropdown_options: ["Jewish", "Muslim", "Christian", "Other"]
+            mandatory: false
+          },
+          {
+            type: dropdown,
+            key: "relation_to_religion"
+            dropdown_options: ["Secular", "Traditional", "Religious", "Orthodox", "Atheist"]
+            mandatory: false
+          },
+          {
+            type: text,
+            key: "chronic_disease"
+            mandatory: false
+          },
+          {
+            type: text,
+            key: "proffesion"
+            mandatory: false
+          },
+          {
+            type: text,
+            key: "occupation"
+            mandatory: false
+          },
+          {
+            type: text,
+            key: "contry_of_origin"
+            mandatory: false
+          },
+          {
+            type: number,
+            key: "number_of_children"
+            mandatory: false
+          },
+          {
+            type: number,
+            key: "number_of_siblings"
+            mandatory: false
+          },
+          {
+            type: number,
+            key: "education_years"
+            mandatory: false
+          },
+          {
+            type: dropdown,
+            key: "education"
+            dropdown_options: ["none", "Elementary", "High school dropout", "High school graduate", "Trade school", "Bachelors degree", "Masters degree", "Doctorate degree"]
+            mandatory: false
+          },
+        ]
+      },
+      {
+        name: "questionnaire_details"
+        fields: [
+          {
+            type: dropdown,
+            key: "language"
+            dropdown_options: ["English", "Arabic", "Hebrew", "French", "German", "Greek", "Italian", "Polish", "Russian"]
+            mandatory: true
+          },
+          {
+            type: dropdown,
+            key: "answer_method"
+            dropdown_options: ["Verbal", "Drawing", "Write", "Typing"]
+            mandatory: true
+          },
+          {
+            type: boolean,
+            key: "native_tongue"
+            mandatory: true
+          },
+          {
+            type: boolean,
+            key: "individual_typed_text"
+            mandatory: true
+          },
+          {
+            type: text,
+            key: "external_id"
+            mandatory: true
+          },
+          {
+            type: date,
+            key: "interview_date"
+            mandatory: true
+          },
+          {
+            type: dropdown,
+            key: "answer_completeness"
+            dropdown_options: ["COMPLETE", "INCOMPLETE - in progress", "INCOMPLETE - subject unavailable"]
+            mandatory: true
+          },
+          {
+            type: dropdown,
+            key: "processing_completeness"
+            dropdown_options: ["COMPLETE", "INCOMPLETE - in progress", "INCOMPLETE - FINISHED"]
+            mandatory: true
+          },
+        ]
+      },
+      {
+        name: "study_details"
+        fields: [
+          {
+          type: text,
+          key: "name",
+          mandatory: true
+          },
+          {
+          type: text,
+          key: "description"
+          mandatory: true
+          },
+          {
+          type: text,
+          key: "codename"
+          mandatory: true
+          },
+          {
+          type: dropdown,
+          key: "research_variables"
+          dropdown_options: ["Personality traits", "Emotions", "Cognition", "Creativity", "Behaviors", "Social behaviors", "Attitudes & values", "Quality of life", "Physical health", "Mental health", "Demographics", "Professions", "Other"]
+          mandatory: true
+          },
+          {
+          type: dropdown,
+          key: "study_population"
+          dropdown_options: ["Adults", "Children", "Students - University", "Students-Secondary school", "Students-Primary school", "Elderly", "Psychopathology", "Physical disease"]
+          mandatory: true
+          },
+          {
+          type: dropdown,
+          key: "source_material"
+          dropdown_options: ["Meaning Questionnaire", "Experimental Text", "Free Text"]
+          mandatory: true
+          },
+          {
+          type: dropdown,
+          key: "instructions"
+          dropdown_options: ["General", "Interpersonal", "Personal"]
+          mandatory: true
+          }
+        ]
+      }
+    ]
+  )
+  {
+    recordIds
+  }
+}
+
+
+mutation {
+  fieldsCreateOne(
+    record:
+    {
+      name: "codings"
+      fields: 
+      [
+        {
+          type: text,
+          key: "referent"
+          mandatory: true
+        },
+        {
+          type: text,
+          key: "meaning_value"
+          mandatory: true
+        },
+        {
+          type: dropdown,
+          key: "sr"
+          dropdown_options: [
+    "1 - Identical",
+    "2 - Opposite",
+    "3 - Partial",
+    "4 - Modified by addition",
+    "5 - Previous meaning value",
+    "6 - Association",
+    "7 - Unrelated",
+    "8 - Verbal label",
+    "9 - Grammatical variation",
+    "10 - Previous meaning values combined",
+    "11 - Superordinate",
+    "12a - Synonym In original language",
+    "12b - Synonym Translated in another language",
+    "12c - Synonym Label in another medium",
+    "12d - Synonym A different formulation of the same referent on the same level",
+    "13 - Replacement by implicit meaning value",
+  ]
+          mandatory: true
+        },
+        {
+          type: dropdown,
+          key: "reflvl"
+          dropdown_options: [
+    "1 - Identical",
+    "2 - One step away from input or previous referent",
+    "3 - Two steps away from input or previous referent",
+    "4 - Three steps away from input",
+    "5 - Four steps away from input",
+    "6 - Five steps away from input",
+  ]
+          mandatory: true
+        },
+        {
+          type: dropdown,
+          key: "dim"
+          dropdown_options: [
+    "1 - Contextual allocation",
+    "2a - Range of inclusion -Sub-classes",
+    "2b - Range of inclusion -Parts",
+    "3 - Function, purpose & roles",
+    "4a - Actions & potentialities for actions-By referent",
+    "4b - Actions & potentialities for actions-To or with referent",
+    "5 - Manner of occurrence & operation",
+    "6 - Antecedents & causes",
+    "7 - Consequences & Results",
+    "8a - Domain of application-As subject",
+    "8b - Domain of application-As object",
+    "9 - Material",
+    "10 - Structure",
+    "11 - State & possible changes in it",
+    "12 - Weight & mass",
+    "13 - Size & dimensionality",
+    "14 - Quantity & number",
+    "15 - Location Qualities",
+    "16 - Temporal Qualities",
+    "17a - Possessions and belongingness - by the referent",
+    "17b - Possessions and belongingness- of the referent",
+    "18 - Development",
+    "19a - Sensory Qualities-Of referent",
+    "19b - Sensory Qualitiesc-By referent",
+    "20a - Feelings & Emotions-Evoked by referent",
+    "20b - Feelings & Emotions-Felt by referent",
+    "21a - Judgments& Evaluations-About referent",
+    "21b - Judgments & Evaluations-By referent",
+    "22a - Cognitive acts & qualities-Evoked by referent",
+    "22b - Cognitive acts & qualities-Of/by referent",
+  ]
+          mandatory: true
+        },
+        {
+          type: dropdown,
+          key: "tr"
+          dropdown_options: [
+    "1a - Attributive: Qualities to substance",
+    "1b - Attributive: Actions to agent",
+    "2a - Comparative: Similarity",
+    "2b - Comparative: Difference",
+    "2c - Comparative: Complementary",
+    "2d - Comparative: Relational",
+    "3a - Exemplifying-Illustrative: Instance",
+    "3b - Exemplifying-Illustrative: Situation",
+    "3c - Exemplifying-Illustrative: Scene",
+    "4a - Metaphoric-Symbolic: Interpretation",
+    "4b - Metaphoric-Symbolic: Conventional Metaphor",
+    "4c - Metaphoric-Symbolic: Original Metaphor",
+    "4d - Metaphoric-Symbolic: Symbol",
+  ]
+          mandatory: true
+        },
+        {
+          type: dropdown,
+          key: "fr"
+          dropdown_options: [
+    "1a - Propositional: Positive",
+    "1b - Propositional: Negative",
+    "2a - Partial: Positive",
+    "2b - Partial: Negative",
+    "3a - Universal: Positive",
+    "3b - Universal: Negative",
+    "4a - Conjunctive: Positive",
+    "4b - Conjunctive: Negative",
+    "5a - Disjunctive: Positive",
+    "5b - Disjunctive: Negative",
+    "6a - Normative: Positive",
+    "6b - Normative: Negative",
+    "7a - Questioning: Positive",
+    "7b - Questioning: Negative",
+    "8a - Desired: Positive",
+    "8b - Desired: Negative",
+  ]
+          mandatory: true
+        },
+        {
+          type: dropdown,
+          key: "fe"
+          dropdown_options: [
+    "1a - Verbal: actual verbal response",
+    "1b - Verbal: verbal description of verbal response",
+    "1c - Verbal: using available verbal materials",
+    "2a - Visual,graphic: Actual visual material",
+    "2b - Visual,graphic: Verbal description of visual response",
+    "2c - Visual,graphic: Using available visual materials",
+    "3a - Motoric,motional: Actual enactment of movements, acts etc.",
+    "3b - Motoric,motional: Verbal description of motoric-motional response",
+    "3c - Motoric,motional: Using available materials of motoric expressions",
+    "4a - Auditory(vocal,tonal): Actual production of auditory materials",
+    "4b - Auditory(vocal,tonal): Verbal description of auditory response",
+    "4c - Auditory(vocal,tonal): using available auditory materials",
+    "5a - Denotative: Actual presentation of object, situation etc.",
+    "5b - Denotative: Verbals description of denotative response",
+  ]
+          mandatory: true
+        },
+        {
+          type: dropdown,
+          key: "ss"
+          dropdown_options: [
+    "1 - General, visual",
+    "2 - Color",
+    "3 - Form and shape",
+    "4 - Gustatory, taste qualities",
+    "5 - Auditory, sound qualities",
+    "6 - Olfactory, smell qualities",
+    "7 - Tactual-kinesthetic",
+    "8 - Temperature, thermal qualities",
+    "9 - Internal sensations",
+    "10 - General sensations",
+    "11 - Pain",
+    "12 - Humidity and dryness",
+    "13 - Skin sensations",
+    "14 - Light or brightness sensations",
+  ]
+          mandatory: true
+        },
+        {
+          type: dropdown,
+          key: "mm"
+          dropdown_options: [
+    "1.-1.a - Generality/ specificity: General, nonspecific",
+    "1.-1.b - Generality/ specificity: Certain, specific",
+    "1.-2.a - Change of meaning - simple literal meaning or non-literal meaning: No change -  literal meaning",
+    "1.-2.b - Change of meaning - simple literal meaning or non-literal meaning: Change - nonliteral meaning",
+    "1.-3.a - Breadth of meaning: Broad, extended meaning",
+    "1.-3.b - Breadth of meaning: Narrow, limited meaning",
+    "1.-4.a - Relation to reality: Theoretical, not in reality",
+    "1.-4.b - Relation to reality: Actual, real",
+    "1.-5.a - Depth of meaning: Superficial",
+    "1.-5.b - Depth of meaning: Deep",
+    "1.-6.a - Objectivity/ subjectivity: Objective",
+    "1.-6.b - Objectivity/ subjectivity: Subjective",
+    "1.-7.a - Emphasis: Strong emphasis",
+    "1.-7.b - Emphasis: Weak emphasis",
+    "1.-8.a - Seriousness of meaning: Serious in a regular sense",
+    "1.-8.b - Seriousness of meaning: Not quite serious",
+    "1.-9.a - Clarifying meaning: By repeating or summarizing",
+    "1.-9.b - Clarifying meaning: By using a different expression (not summarizing)",
+    "1.-10.a - Citing origin of response: Mentioned source other than the speaker",
+    "1.-10.b - Citing origin of response: Mentions oneself as a source, i.e., cites oneself or refers to one`s previous response",
+    "2.-1.a - Surprise: Not surprising",
+    "2.-1.b - Surprise: Surprising",
+    "2.-2.a - Veridicality, correctness: Correctly",
+    "2.-2.b - Veridicality, correctness: Incorrectly",
+    "2.-3.a - Characteristic/Extraordinary: Regular",
+    "2.-3.b - Characteristic/Extraordinary: Extraordinary",
+    "2.-4.a - Positiveness of the feeling evoked by the meaning value: Satisfying, causing joy",
+    "2.-4.b - Positiveness of the feeling evoked by the meaning value: Saddening, disappointing",
+    "3.-1.a - Degree of confidence: Expressing confidence",
+    "3.-1.b - Degree of confidence: Expressing doubt or reservation",
+    "4.-1.a - General attribution: Attributing to oneself",
+    "4.-1.b - General attribution: Attributing to others",
+    "4.-2.a - Specificity of attribution: Specific attribution to oneself",
+    "4.-2.b - Specificity of attribution: Attributing to specific others",
+    "5.-1.a - Separating or identifying interpersonal and personal meanings\\Identifying interpersonal meaning",
+    "5.-1.b - Separating or identifying interpersonal and personal meanings: Identifying personal meaning",
+    "5.-2.a - Identifying different meanings: Not separating different meanings",
+    "5.-2.b - Identifying different meanings: Separating different meanings",
+    "6.-1.a - Evaluating the task:Task is difficult",
+    "6.-1.b - Evaluating the task: Task is easy",
+    "6.-2.a - Evaluating one`s response: Positive evaluation",
+    "6.-2.b - Evaluating one`s response: Negative, not positive evaluation",
+    "7.-1.a - Unclarity: Unclarity in regard to the meaning value",
+    "7.-1.b - Unclarity: Unclarity in regard to the referent",
+    "7.-2.a - Missing elements: Missing meaning value (but there is referent)",
+    "7.-2.b - Missing elements: Missing referent (but there is meaning value)",
+    "7.-3.a - Inability to express (expressive or conceptual inability): Inability to express the meaning value",
+    "7.-3.b - Inability to express (expressive or conceptual inability): Inability to express the referent",
+    "7.-4.a - Explicitly stated missing information: No response because has nothing to say",
+    "7.-4.b - Explicitly stated missing information: No response because does not understand input",
+    "7.-5 - Missing response without any explanation",
+  ]
+          mandatory: true
+        },
+        {
+          type: boolean,
+          key: "status"
+          mandatory: true
+        },
+      ]
+    }
+  )
+  {
+    recordId
+  }
+}

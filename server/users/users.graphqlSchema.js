@@ -11,23 +11,35 @@ function addUserGraphqlSchema() {
       userByIds: UserTC.mongooseResolvers.findByIds(),
       userOne: UserTC.mongooseResolvers.findOne(),
       userMany: UserTC.mongooseResolvers.findMany(),
-      userDataLoader: UserTC.mongooseResolvers.dataLoader(),
-      userDataLoaderMany: UserTC.mongooseResolvers.dataLoaderMany(),
-      userCount: UserTC.mongooseResolvers.count(),
-      userConnection: UserTC.mongooseResolvers.connection(),
-      userPagination: UserTC.mongooseResolvers.pagination(),
     });
-    
-    schemaComposer.Mutation.addFields({
-      userCreateOne: UserTC.mongooseResolvers.createOne(),
-      userCreateMany: UserTC.mongooseResolvers.createMany(),
-      userUpdateById: UserTC.mongooseResolvers.updateById(),
-      userUpdateOne: UserTC.mongooseResolvers.updateOne(),
-      userUpdateMany: UserTC.mongooseResolvers.updateMany(),
-      userRemoveById: UserTC.mongooseResolvers.removeById(),
-      userRemoveOne: UserTC.mongooseResolvers.removeOne(),
-      userRemoveMany: UserTC.mongooseResolvers.removeMany(),
-    });
+  
+  schemaComposer.Mutation.addFields({
+    userCreateOne: UserTC.mongooseResolvers.createOne().wrapResolve((next) => (rp) => {
+      rp.beforeRecordMutate = async function(doc) {
+        const date = new Date()
+        doc.date_created = date
+        doc.date_updated = date
+        doc.is_deleted = false
+        return doc;
+      }
+      return next(rp);
+    }),
+    userUpdateById: UserTC.mongooseResolvers.updateById().wrapResolve((next) => (rp) => {
+      rp.beforeRecordMutate = async function(doc) {
+        doc.date_updated = new Date()
+        return doc;
+      }
+      return next(rp);
+    }),
+    userRemoveById: UserTC.mongooseResolvers.updateById().wrapResolve((next) => (rp) => {
+      rp.beforeRecordMutate = async function(doc) {
+        doc.date_updated = new Date()
+        doc.is_deleted = true
+        return doc;
+      }
+      return next(rp);
+    }),
+  });
 
 }
 

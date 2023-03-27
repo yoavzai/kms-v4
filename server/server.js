@@ -4,15 +4,25 @@ const cors = require('cors')
 const { mongoose } = require('mongoose')
 const { schemaComposer } = require('graphql-compose')
 const { addUserGraphqlSchema} = require('./users/users.graphqlSchema')
-const { addCarsGraphqlSchema} = require('./cars/cars.graphqlSchema')
+const { addStudiesGraphqlSchema } = require('./studies/studies.graphqlSchema');
+const { addQuestionnairesGraphqlSchema } = require('./questionnaires/questionnaire.graphqlSchema');
+const { addTemplateGraphqlSchema } = require('./templates/templates.graphqlSchema')
+const { addTranslationGraphqlSchema } = require('./translations/translations.graphqlSchema')
+const { addFieldsGraphqlSchema } = require('./fields/fields.graphqlSchema');
+const { addApprovedCodingsGraphqlSchema } = require('./approved_codings/approved_codings.graphqlSchema');
 
 
+addApprovedCodingsGraphqlSchema()
+addFieldsGraphqlSchema()
+addQuestionnairesGraphqlSchema()
+addStudiesGraphqlSchema()
+addTemplateGraphqlSchema()
+addTranslationGraphqlSchema()
 addUserGraphqlSchema()
-addCarsGraphqlSchema()
 const graphqlSchema = schemaComposer.buildSchema()
 
 async function connectToMongoDB() {
-  const MONGO_URL = "mongodb+srv://yoav:yoav@cluster0.8wv31hj.mongodb.net/?retryWrites=true&w=majority";
+  const MONGO_URL = "mongodb+srv://yoav:yoav@cluster0.8wv31hj.mongodb.net/kms?retryWrites=true&w=majority";
   mongoose.connection.once("open", () => {
   console.log("connected to mongodb")
   })
@@ -20,7 +30,12 @@ async function connectToMongoDB() {
   console.error(err)
   });
   mongoose.set('strictQuery', false)
-  await mongoose.connect(MONGO_URL)
+  try {
+    await mongoose.connect(MONGO_URL)
+  }
+  catch (err) {
+    console.error(err)
+  }
 }
 
 
