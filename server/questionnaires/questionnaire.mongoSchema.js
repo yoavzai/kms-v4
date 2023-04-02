@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongodb');
 const { mongoose } = require('mongoose');
 const { coding_template } = require('../approved_codings/approved_codings.mongoSchema');
 const { field_template } = require('../fields/fields.mongoSchema');
@@ -17,7 +16,8 @@ const input_template = {
 }
 
 const QuestionnaireSchema = new mongoose.Schema({
-  study_id: ObjectId,
+  _id: String,
+  study_id: String,
   individual_details: [field_template],
   questionnaire_details: [field_template],
   inputs: [input_template],

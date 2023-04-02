@@ -1,8 +1,13 @@
-mutation {
+import { gql } from "@apollo/client";
+
+
+
+export const CREATE_STUDIY= gql`
+mutation studyCreateOne($creator_id: String!){
 	studyCreateOne(
     record:
     {
-      creator_id: "5cd99685-c55e-470a-b267-6ca24fe6f5c9"
+      creator_id: $creator_id
       study_details:
       [
         {
@@ -54,26 +59,13 @@ mutation {
     recordId
   }
 }
+`       
 
-
-query {
-  studyById(_id: "641a56d14571fc6f0745f2bc") {
-    study_details {
-      type
-      key
-      value
-      min_num
-      max_num
-      dropdown_options
-    }
+export const GET_STUDY_BY_ID = gql`
+query studyById($id: String!){
+	studyById(_id: $id)
+  {
+    creator_id
   }
 }
-
-
-query {
-  studyOne(filter: {creator_id: "641a53944571fc6f0745f2b6"}) {
-    _id
-    date_created
-    date_updated
-  }
-}
+`       

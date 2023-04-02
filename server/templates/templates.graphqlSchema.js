@@ -1,6 +1,7 @@
 const { schemaComposer } = require('graphql-compose')
 const { composeMongoose } = require('graphql-compose-mongoose')
 const { TemplateModel } = require('./templates.mongoSchema')
+const { v4 } = require('uuid');
 
 
 function addTemplateGraphqlSchema() {
@@ -14,8 +15,20 @@ function addTemplateGraphqlSchema() {
     });
     
     schemaComposer.Mutation.addFields({
-      templateCreateOne: TemplateTC.mongooseResolvers.createOne(),
-      templateCreateMany: TemplateTC.mongooseResolvers.createMany(),
+      templateCreateOne: TemplateTC.mongooseResolvers.createOne().wrapResolve((next) => (rp) => {
+        rp.beforeRecordMutate = async function(doc) {
+          doc._id = v4()
+          return doc;
+        }
+        return next(rp);
+      }),
+      templateCreateMany: TemplateTC.mongooseResolvers.createMany().wrapResolve((next) => (rp) => {
+        rp.beforeRecordMutate = async function(doc) {
+          doc._id = v4()
+          return doc;
+        }
+        return next(rp);
+      }),
       templateUpdateById: TemplateTC.mongooseResolvers.updateById(),
       templateRemoveById: TemplateTC.mongooseResolvers.removeById(),
     });

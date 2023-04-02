@@ -1,46 +1,16 @@
-import { useQuery, gql } from '@apollo/client';
+import { Routes, Route, useNavigate } from "react-router-dom";
+import HomeComp from "./components/home";
+import UserComp from "./components/user";
 
-const GET_CARS = gql`
-query getTrans{
-  translationMany(
-    filter:{
-      OR: [
-        {
-          input_id:1
-        }
-        {
-          input_id:2
-        }
-      ]
-    }
-  )
-  {
-    value
-  }
-}
-`;
-
-function DisplayCars() {
-  const { loading, error, data } = useQuery(GET_CARS);
-
-  // if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
-
-  if (!loading) {
-    return data.translationMany.map((car, idx) => (
-      <div key={idx}>
-        <h3>{car.value}</h3>
-      </div>
-    ));
-
-  }
-}
 
 export default function App() {
 
   return (
     <div>
-      <DisplayCars/>
+      <Routes>
+        <Route path='/users/:name' element={<UserComp></UserComp>}></Route>
+        <Route path='/' element={<HomeComp></HomeComp>}></Route>
+      </Routes>
     </div>
   );
 }

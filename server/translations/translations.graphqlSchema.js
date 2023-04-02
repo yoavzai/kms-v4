@@ -1,6 +1,7 @@
 const { schemaComposer } = require('graphql-compose')
 const { composeMongoose } = require('graphql-compose-mongoose')
 const { TranslationModel } = require('./translations.mongoSchema')
+const { v4 } = require('uuid');
 
 
 function addTranslationGraphqlSchema() {
@@ -14,8 +15,20 @@ function addTranslationGraphqlSchema() {
     });
     
     schemaComposer.Mutation.addFields({
-      translationCreateOne: TranslationTC.mongooseResolvers.createOne(),
-      translationCreateMany: TranslationTC.mongooseResolvers.createMany(),
+      translationCreateOne: TranslationTC.mongooseResolvers.createOne().wrapResolve((next) => (rp) => {
+        rp.beforeRecordMutate = async function(doc) {
+          doc._id = v4()
+          return doc;
+        }
+        return next(rp);
+      }),
+      translationCreateMany: TranslationTC.mongooseResolvers.createMany().wrapResolve((next) => (rp) => {
+        rp.beforeRecordMutate = async function(doc) {
+          doc._id = v4()
+          return doc;
+        }
+        return next(rp);
+      }),
       translationUpdateById: TranslationTC.mongooseResolvers.updateById(),
       translationRemoveById: TranslationTC.mongooseResolvers.removeById(),
     });

@@ -1,6 +1,7 @@
 const { schemaComposer } = require('graphql-compose')
 const { composeMongoose } = require('graphql-compose-mongoose')
 const { QuestionnaireModel } = require('./questionnaire.mongoSchema')
+const { v4 } = require('uuid');
 
 
 function addQuestionnairesGraphqlSchema() {
@@ -17,6 +18,7 @@ function addQuestionnairesGraphqlSchema() {
     schemaComposer.Mutation.addFields({
       questionnaireCreateOne: QuestionnaireTC.mongooseResolvers.createOne().wrapResolve((next) => (rp) => {
         rp.beforeRecordMutate = async function(doc) {
+          doc._id = v4()
           const date = new Date()
           doc.date_created = date
           doc.date_updated = date

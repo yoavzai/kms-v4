@@ -1,7 +1,7 @@
 const { schemaComposer } = require('graphql-compose')
 const { composeMongoose } = require('graphql-compose-mongoose')
 const { ApprovedCodingsModel } = require('./approved_codings.mongoSchema')
-
+const { v4 } = require('uuid');
 
 function addApprovedCodingsGraphqlSchema() {
 
@@ -17,6 +17,7 @@ function addApprovedCodingsGraphqlSchema() {
     schemaComposer.Mutation.addFields({
       approved_codingsCreateOne: ApprovedCodingsTC.mongooseResolvers.createOne().wrapResolve((next) => (rp) => {
         rp.beforeRecordMutate = async function(doc) {
+          doc._id = v4()
           const date = new Date()
           doc.date_created = date
           doc.date_updated = date

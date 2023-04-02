@@ -23,6 +23,7 @@ const field_template = {
 }
 
 const FieldsSchema = new mongoose.Schema({
+  _id: String,
   name: String,
   fields: [field_template],
 })

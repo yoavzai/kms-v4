@@ -2,6 +2,7 @@ const { mongoose } = require('mongoose');
 
 
 const coding_template = {
+  _id: String,
   referent: String,
   meaning_value: String,
   sr: String,
