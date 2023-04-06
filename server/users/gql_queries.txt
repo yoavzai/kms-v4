@@ -1,0 +1,38 @@
+mutation {
+  userCreateOne(
+    record:
+    {
+      username: "yoav1234"
+      passhash: "alibaba"
+      email: "yoavzai@gmail.com"
+      first_name: "yoav"
+      last_name: "zai"
+      role: admin
+    }
+  )
+  {
+    recordId
+  }
+}
+
+
+mutation {
+  userUpdateById(_id: "641a53944571fc6f0745f2b6"
+    record:
+    {
+      role: user
+    }
+  )
+  {
+    recordId
+  }
+}
+
+
+mutation {
+  userRemoveById(_id: "641a53944571fc6f0745f2b6"
+  record: {})
+  {
+    recordId
+  }
+}
