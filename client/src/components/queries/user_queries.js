@@ -16,11 +16,10 @@ const USER_FIELDS = gql`
     }
 `;
 
-export const GET_USER_BY_NAME = gql`
+export const GET_USER = gql`
   ${USER_FIELDS}
-  query getUserByName($name: String!){
-    userOne(filter: {username: $name})
-    {
+  query GetUser($email: String!, $password: String!) {
+    userOne(filter: {email: $email, passhash: $password}) {
       ...UserFields
     }
   }

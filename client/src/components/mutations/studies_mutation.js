@@ -1,58 +1,18 @@
 import { gql } from "@apollo/client";
+import { FIELDS } from "../queries/fields_query";
 
 
 
-export const CREATE_STUDIY= gql`
-mutation studyCreateOne($creator_id: String!){
+export const CREATE_STUDY= gql`
+${FIELDS}
+mutation studyCreateOne($creator_id: String!, $study_details: [Fields], $individual_details: [Fields], $questionnaire_details: [Fields]){
 	studyCreateOne(
     record:
     {
       creator_id: $creator_id
-      study_details:
-      [
-        {
-          type: slider
-          key: "a"
-          value: "10"
-        },
-        {
-          type: dropdown
-          key: "b"
-          value: "b"
-          dropdown_options: ["a","b","c"]
-        },
-        {
-          type:text
-          key: "c"
-        },
-        {
-          type: number
-          key: "d"
-          value: "4.5"
-          min_num: "3"
-          max_num: "5"
-        }
-    	]
-      individual_details:
-      [
-        {
-          type: text
-          key: "e"
-          value: "eeeeeeee"
-        }
-      ]
-      questionnaire_details:
-      [
-        {
-          type: boolean
-          key: "f"
-          value: "true"
-        },
-        {
-          type: date
-          key: "interview date"
-        }
-      ]
+      study_details: $study_details
+      individual_details: $individual_details
+      questionnaire_details: $questionnaire_details
     }
   )
   {

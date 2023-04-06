@@ -4,7 +4,7 @@ const { mongoose } = require('mongoose');
 const field_template = {
   type: {
     type: String,
-    enum: ["text", "number", "date", "dropdown", "slider", "boolean"],
+    enum: ["text", "number", "date", "dropdown", "slider"],
     required: true
   },
   key: {

@@ -115,13 +115,15 @@ mutation {
             mandatory: true
           },
           {
-            type: boolean,
+            type: dropdown,
             key: "native_tongue"
+            dropdown_options: ["Yes", "No"]
             mandatory: true
           },
           {
-            type: boolean,
+            type: dropdown,
             key: "individual_typed_text"
+            dropdown_options: ["Yes", "No"]
             mandatory: true
           },
           {
@@ -434,8 +436,9 @@ mutation {
           mandatory: true
         },
         {
-          type: boolean,
+          type: dropdown,
           key: "status"
+          dropdown_options: ["Yes", "No"]
           mandatory: true
         },
       ]

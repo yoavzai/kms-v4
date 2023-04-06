@@ -39,9 +39,10 @@ mutation {
       questionnaire_details:
       [
         {
-          type: boolean
+          type: dropdown
           key: "f"
           value: "true"
+          dropdown_options: ["Yes", "No"]
         },
         {
           type: date
