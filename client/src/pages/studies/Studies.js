@@ -1,5 +1,6 @@
 import {
-  StudiesBrowser
+  StudiesBrowser,
+  NewStudyWizard,
 } from './components';
 
 export default function() {
@@ -7,6 +8,7 @@ export default function() {
     <>
       <h1>Studies page</h1>
       <StudiesBrowser />
+      <NewStudyWizard />
     </>
   );
 }
