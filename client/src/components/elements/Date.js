@@ -10,6 +10,7 @@ export default function({id, label, value, onChange}) {
         value={value}
         onChange={onChange}
         variant="standard"
+        type='date'
       />
     </>
 	);

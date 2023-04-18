@@ -1,15 +1,8 @@
-import { TextInput, Select } from './form-components';
+import { TextInput, Select, Number, Date, Slider } from './form-components';
 
-function renderField(currentvalue, stateHandler) {
-  return function({
-    type,
-    key,
-    mandatory,
-    value,
-    min_num,
-    max_num,
-    dropdown_options,
-  }) {
+function renderField(field, handleValueChange) {
+
+  const {type,key,mandatory,value,min_num,max_num,dropdown_options} = field
     switch(type) {
       case 'text':
         return (
@@ -17,8 +10,43 @@ function renderField(currentvalue, stateHandler) {
             <TextInput
               key={key}
               label={key}
-              value={currentvalue}
-              onChange={({ target: { value }}) => stateHandler(state => ({...state, [`${key}`]: value}))}
+              value={value}
+              onChange={({ target: { value : newValue }}) => handleValueChange(newValue, key)}
+            />
+          </div>
+        );
+      case 'slider':
+        return (
+          <div>
+            <Slider
+              key={key}
+              label={key}
+              value={value}
+              onChange={({ target: { value : newValue }}) => handleValueChange(newValue, key)}
+            />
+          </div>
+        );
+      case 'date':
+        return (
+          <div>
+            <Date
+              key={key}
+              label={key}
+              value={value}
+              onChange={({ target: { value : newValue }}) => handleValueChange(newValue, key)}
+            />
+          </div>
+        );
+      case 'number':
+        return (
+          <div>
+            <Number
+              key={key}
+              label={key}
+              value={value}
+              onChange={({ target: { value : newValue }}) => handleValueChange(newValue, key)}
+              min={min_num}
+              max={max_num}
             />
           </div>
         );
@@ -28,26 +56,29 @@ function renderField(currentvalue, stateHandler) {
             <Select
               key={key}
               label={key}
-              value={currentvalue}
-              onChange={({ target: { value }}) => stateHandler(state => ({...state, [`${key}`]: value}))}
+              value={value}
+              onChange={({ target: { value : newValue}}) => handleValueChange(newValue, key)}
               options={dropdown_options.map(option => ({ label: option, value: option }))}
+              required={mandatory}
             />
           </div>
         );
     };
   };
-};
 
-export default function({fields, state, stateHandler}) {
+export default function({isCheckbox, fields, handleValueChange, handleCheckboxChange}) {
   return (
     <>
-      <h3>FormRenderer</h3>
       {
-        fields.map((field) => (
-          <div key={field.key}>
-            {renderField(!!state && state[field.key] ? state[field.key] : "", stateHandler)(field)}
-          </div>
-        ))
+        fields.map((field, index) => {
+          const field_data = isCheckbox ? field.data : field
+          return (
+            <div key={index}>
+              {isCheckbox &&  <input type="checkbox" checked={field.checked} onChange={({ target: {checked}}) => handleCheckboxChange(checked, field_data.key)} />}
+              {renderField(field_data, handleValueChange)}
+            </div>
+          )
+          })
       }
     </>
   );

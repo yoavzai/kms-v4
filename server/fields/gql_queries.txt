@@ -7,95 +7,155 @@ mutation {
           {
             type: dropdown,
             key: "gender"
-            dropdown_options: ["MALE", "FEMALE"]
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["MALE", "FEMALE"]
           },
           {
             type: date,
             key: "birth_date"
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: number,
             key: "age"
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: dropdown,
             key: "marital_status"
-            dropdown_options: ["Single", "Married", "Divorced", "Widower"]
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Single", "Married", "Divorced", "Widower"]
           },
           {
             type: dropdown,
             key: "physical_health"
-            dropdown_options: ["Sick", "Healthy"]
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Sick", "Healthy"]
           },
           {
             type: dropdown,
             key: "economic_status"
-            dropdown_options: ["Above Average", "Average", "Bellow Average"]
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Above Average", "Average", "Bellow Average"]
           },
           {
             type: dropdown,
             key: "employment_status"
-            dropdown_options: ["Full-time", "Part-time", "Unemployed", "Retired", "Housewife", "Volunteer", "Student"]
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Full-time", "Part-time", "Unemployed", "Retired", "Housewife", "Volunteer", "Student"]
           },
           {
             type: dropdown,
             key: "religion"
-            dropdown_options: ["Jewish", "Muslim", "Christian", "Other"]
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Jewish", "Muslim", "Christian", "Other"]
           },
           {
             type: dropdown,
             key: "relation_to_religion"
-            dropdown_options: ["Secular", "Traditional", "Religious", "Orthodox", "Atheist"]
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Secular", "Traditional", "Religious", "Orthodox", "Atheist"]
           },
           {
             type: text,
             key: "chronic_disease"
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: text,
             key: "proffesion"
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: text,
             key: "occupation"
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: text,
             key: "contry_of_origin"
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: number,
             key: "number_of_children"
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: number,
             key: "number_of_siblings"
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: number,
             key: "education_years"
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: dropdown,
             key: "education"
-            dropdown_options: ["none", "Elementary", "High school dropout", "High school graduate", "Trade school", "Bachelors degree", "Masters degree", "Doctorate degree"]
             mandatory: false
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["none", "Elementary", "High school dropout", "High school graduate", "Trade school", "Bachelors degree", "Masters degree", "Doctorate degree"]
           },
         ]
       },
@@ -105,48 +165,74 @@ mutation {
           {
             type: dropdown,
             key: "language"
-            dropdown_options: ["English", "Arabic", "Hebrew", "French", "German", "Greek", "Italian", "Polish", "Russian"]
             mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["English", "Arabic", "Hebrew", "French", "German", "Greek", "Italian", "Polish", "Russian"]
           },
           {
             type: dropdown,
             key: "answer_method"
-            dropdown_options: ["Verbal", "Drawing", "Write", "Typing"]
             mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Verbal", "Drawing", "Write", "Typing"]
           },
           {
             type: dropdown,
             key: "native_tongue"
-            dropdown_options: ["Yes", "No"]
             mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Yes", "No"]
           },
           {
             type: dropdown,
             key: "individual_typed_text"
-            dropdown_options: ["Yes", "No"]
             mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Yes", "No"]
           },
           {
             type: text,
             key: "external_id"
             mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: date,
             key: "interview_date"
             mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
             type: dropdown,
             key: "answer_completeness"
-            dropdown_options: ["COMPLETE", "INCOMPLETE - in progress", "INCOMPLETE - subject unavailable"]
             mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["COMPLETE", "INCOMPLETE - in progress", "INCOMPLETE - subject unavailable"]
           },
           {
             type: dropdown,
             key: "processing_completeness"
-            dropdown_options: ["COMPLETE", "INCOMPLETE - in progress", "INCOMPLETE - FINISHED"]
             mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["COMPLETE", "INCOMPLETE - in progress", "INCOMPLETE - FINISHED"]
           },
         ]
       },
@@ -154,43 +240,67 @@ mutation {
         name: "study_details"
         fields: [
           {
-          type: text,
-          key: "name",
-          mandatory: true
+            type: text,
+            key: "name",
+            mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
-          type: text,
-          key: "description"
-          mandatory: true
+            type: text,
+            key: "description"
+            mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
-          type: text,
-          key: "codename"
-          mandatory: true
+            type: text,
+            key: "codename"
+            mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: []
           },
           {
-          type: dropdown,
-          key: "research_variables"
-          dropdown_options: ["Personality traits", "Emotions", "Cognition", "Creativity", "Behaviors", "Social behaviors", "Attitudes & values", "Quality of life", "Physical health", "Mental health", "Demographics", "Professions", "Other"]
-          mandatory: true
+            type: dropdown,
+            key: "research_variables"
+            mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Personality traits", "Emotions", "Cognition", "Creativity", "Behaviors", "Social behaviors", "Attitudes & values", "Quality of life", "Physical health", "Mental health", "Demographics", "Professions", "Other"]
           },
           {
-          type: dropdown,
-          key: "study_population"
-          dropdown_options: ["Adults", "Children", "Students - University", "Students-Secondary school", "Students-Primary school", "Elderly", "Psychopathology", "Physical disease"]
-          mandatory: true
+            type: dropdown,
+            key: "study_population"
+            mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Adults", "Children", "Students - University", "Students-Secondary school", "Students-Primary school", "Elderly", "Psychopathology", "Physical disease"]
           },
           {
-          type: dropdown,
-          key: "source_material"
-          dropdown_options: ["Meaning Questionnaire", "Experimental Text", "Free Text"]
-          mandatory: true
+            type: dropdown,
+            key: "source_material"
+            mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["Meaning Questionnaire", "Experimental Text", "Free Text"]
           },
           {
-          type: dropdown,
-          key: "instructions"
-          dropdown_options: ["General", "Interpersonal", "Personal"]
-          mandatory: true
+            type: dropdown,
+            key: "instructions"
+            mandatory: true
+            value: ""
+            min_num: ""
+            max_num: ""
+            dropdown_options: ["General", "Interpersonal", "Personal"]
           }
         ]
       }
@@ -213,15 +323,27 @@ mutation {
           type: text,
           key: "referent"
           mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
+          dropdown_options: []
         },
         {
           type: text,
           key: "meaning_value"
           mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
+          dropdown_options: []
         },
         {
           type: dropdown,
           key: "sr"
+          mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
           dropdown_options: [
     "1 - Identical",
     "2 - Opposite",
@@ -240,11 +362,14 @@ mutation {
     "12d - Synonym A different formulation of the same referent on the same level",
     "13 - Replacement by implicit meaning value",
   ]
-          mandatory: true
         },
         {
           type: dropdown,
           key: "reflvl"
+          mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
           dropdown_options: [
     "1 - Identical",
     "2 - One step away from input or previous referent",
@@ -253,11 +378,14 @@ mutation {
     "5 - Four steps away from input",
     "6 - Five steps away from input",
   ]
-          mandatory: true
         },
         {
           type: dropdown,
           key: "dim"
+          mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
           dropdown_options: [
     "1 - Contextual allocation",
     "2a - Range of inclusion -Sub-classes",
@@ -290,11 +418,14 @@ mutation {
     "22a - Cognitive acts & qualities-Evoked by referent",
     "22b - Cognitive acts & qualities-Of/by referent",
   ]
-          mandatory: true
         },
         {
           type: dropdown,
           key: "tr"
+          mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
           dropdown_options: [
     "1a - Attributive: Qualities to substance",
     "1b - Attributive: Actions to agent",
@@ -310,11 +441,14 @@ mutation {
     "4c - Metaphoric-Symbolic: Original Metaphor",
     "4d - Metaphoric-Symbolic: Symbol",
   ]
-          mandatory: true
         },
         {
           type: dropdown,
           key: "fr"
+          mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
           dropdown_options: [
     "1a - Propositional: Positive",
     "1b - Propositional: Negative",
@@ -333,11 +467,14 @@ mutation {
     "8a - Desired: Positive",
     "8b - Desired: Negative",
   ]
-          mandatory: true
         },
         {
           type: dropdown,
           key: "fe"
+          mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
           dropdown_options: [
     "1a - Verbal: actual verbal response",
     "1b - Verbal: verbal description of verbal response",
@@ -354,11 +491,14 @@ mutation {
     "5a - Denotative: Actual presentation of object, situation etc.",
     "5b - Denotative: Verbals description of denotative response",
   ]
-          mandatory: true
         },
         {
           type: dropdown,
           key: "ss"
+          mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
           dropdown_options: [
     "1 - General, visual",
     "2 - Color",
@@ -375,11 +515,14 @@ mutation {
     "13 - Skin sensations",
     "14 - Light or brightness sensations",
   ]
-          mandatory: true
         },
         {
           type: dropdown,
           key: "mm"
+          mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
           dropdown_options: [
     "1.-1.a - Generality/ specificity: General, nonspecific",
     "1.-1.b - Generality/ specificity: Certain, specific",
@@ -433,13 +576,15 @@ mutation {
     "7.-4.b - Explicitly stated missing information: No response because does not understand input",
     "7.-5 - Missing response without any explanation",
   ]
-          mandatory: true
         },
         {
           type: dropdown,
           key: "status"
-          dropdown_options: ["Yes", "No"]
           mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
+          dropdown_options: ["Yes", "No"]
         },
       ]
     }

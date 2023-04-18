@@ -12,6 +12,7 @@ import {
   ConfigPage,
   UsersPage,
 } from './pages';
+import StudyDisplay from './pages/studies/components/StudyDisplay';
 
 
 const client = new ApolloClient({
@@ -49,7 +50,7 @@ root.render(
         <Route path="/" element={<Homepage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="studies" element={<StudiesPage />} />
-        <Route path="studies/:studyId" element={<StudiesPage />} />
+        <Route path="studies/:studyId" element={<StudyDisplay />} />
         <Route path="questionnaires" element={<QuestionnairesPage />} />
         <Route path="questionnaires/:questionnaireId" element={<QuestionnairesPage />} />
         <Route path="manual" element={<ManualPage />} />

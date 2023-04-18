@@ -1,15 +1,15 @@
 import { InputLabel } from '@mui/material';
-import TextField from '@mui/material/TextField';
+import Slider from '@mui/material/Slider';
 
 export default function({id, label, value, onChange}) {
+    value = parseInt(value) || 0
   return (
     <>
       <InputLabel>{label}</InputLabel>
-      <TextField
+      <Slider
         id={id}
         value={value}
         onChange={onChange}
-        variant="standard"
       />
     </>
 	);
