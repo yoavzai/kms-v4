@@ -9,14 +9,17 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { GET_INDIVIDUAL_DETAILS_FIELDS, GET_QUESTIONNAIRE_DETAILS_FIELDS, GET_STUDY_DETAILS_FIELDS } from '../../../queries/fields';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useNavigate } from "react-router-dom";
 import NewFieldForm from './NewFieldForm'
+import { CREATE_STUDY } from '../../../mutations/studies';
+import { cleanPayload } from '../../../utils';
 
 
 const steps = ['Study details', 'Individual details', 'Questionnaire details'];
 
 export default function({cancelNewStudy}) {
+  const userId = "5cd99685-c55e-470a-b267-6ca24fe6f5c9"
   const navigate = useNavigate()
   const [activeStep, setActiveStep] = useState(0);
   const [studyDetails, setStudyDetails] = useState([]);
@@ -26,10 +29,12 @@ export default function({cancelNewStudy}) {
   useQuery(GET_STUDY_DETAILS_FIELDS, {onCompleted: handleSetStudyDetails});
   useQuery(GET_INDIVIDUAL_DETAILS_FIELDS, {onCompleted: handleSetIndividualDetails});
   useQuery(GET_QUESTIONNAIRE_DETAILS_FIELDS, {onCompleted: handleSetQuestionnaireDetails});
+  const [createStudy, {newStudy, loading, error}] = useMutation(CREATE_STUDY)
 
 
   function handleSetStudyDetails(data) {
-    const arr = data.fieldsOne.fields.map(field => {
+    const payload = cleanPayload(data.fieldsOne.fields)
+    const arr = payload.map(field => {
       return (
         {
           checked: false,
@@ -41,7 +46,8 @@ export default function({cancelNewStudy}) {
   }
 
   function handleSetIndividualDetails(data) {
-    const arr = data.fieldsOne.fields.map(field => {
+    const payload = cleanPayload(data.fieldsOne.fields)
+    const arr = payload.map(field => {
       return (
         {
           checked: false,
@@ -53,7 +59,8 @@ export default function({cancelNewStudy}) {
   }
 
   function handleSetQuestionnaireDetails(data) {
-    const arr = data.fieldsOne.fields.map(field => {
+    const payload = cleanPayload(data.fieldsOne.fields)
+    const arr = payload.map(field => {
       return (
         {
           checked: false,
@@ -64,8 +71,8 @@ export default function({cancelNewStudy}) {
     setQuestionnaireDetails(arr)
   }
   
-  const handleFinish = () => {
-
+  const handleFinish = async () => {
+    
     const getCheckedFields = (fields) => {
       const checkedFields = []
       for (const field of fields) {
@@ -77,13 +84,14 @@ export default function({cancelNewStudy}) {
     }
 
     const newStudyData = {
-      creator_id: "yoav",
+      creator_id: userId,
       study_details: getCheckedFields(studyDetails),
       individual_details: getCheckedFields(individualDetails),
       questionnaire_details: getCheckedFields(questionnaireDetails),
     }
-    
-    navigate("/studies/study1", {state: {studyData: newStudyData}})
+
+    const res = await createStudy({variables: {record: newStudyData}})
+    navigate("/studies/study1", {state: {studyData: res.data.studyCreateOne.record}})
   };
   
   const handleNext = () => {
@@ -138,6 +146,7 @@ export default function({cancelNewStudy}) {
  };
 
   const handleValueChange = (newValue, key) => {
+    newValue = newValue.toString()
     switch(activeStep) {
       case 0:
         {

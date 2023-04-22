@@ -2,8 +2,6 @@ import { gql } from "@apollo/client";
 
 export const FIELDS = gql`
   fragment Fields on Fields{
-    _id
-    name
     fields
         {
             type
@@ -22,6 +20,8 @@ export const GET_CODINGS_FIELDS = gql`
     ${FIELDS}
     query fieldsOne{
 	fieldsOne(filter: {name: "codings"}) {
+        _id
+        name
         ...Fields
     }
 
@@ -31,6 +31,8 @@ export const GET_STUDY_DETAILS_FIELDS = gql`
     ${FIELDS}
     query fieldsOne{
 	fieldsOne(filter: {name: "study_details"}) {
+        _id
+        name
         ...Fields
     }
 
@@ -40,6 +42,8 @@ export const GET_INDIVIDUAL_DETAILS_FIELDS = gql`
     ${FIELDS}
     query fieldsOne{
 	fieldsOne(filter: {name: "individual_details"}) {
+        _id
+        name
         ...Fields
     }
 
