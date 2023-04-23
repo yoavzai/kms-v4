@@ -7,7 +7,7 @@ export default function() {
 	return (
 		<div>
 			<h3>StudyDisplay component</h3>
-			<h4>creator: {location.state.studyData.creator_id}</h4>
+			<h4>creator ID: {location.state.studyData.creator_id}</h4>
 			<h4>study details</h4>
 			{location.state.studyData.study_details.map(field => {
 				return(

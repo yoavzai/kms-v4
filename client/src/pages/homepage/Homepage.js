@@ -1,29 +1,49 @@
-import { useQuery, gql } from '@apollo/client';
-
-const GET_FIELDS = gql`
-  query {
-    fieldsOne(filter: {name: "study_details"}){
-      _id
-      name
-      fields
-        {
-          type
-          key
-          mandatory
-          value
-          min_num
-          max_num
-          dropdown_options
-        }
-    }
-  }
-`;
+import { useQuery } from "@apollo/client";
+import { ALL_USERS } from "../../queries/users";
+import { useState } from "react";
+import { cleanPayload } from '../../utils';
 
 export default function() {
-  const { loading, error, data } = useQuery(GET_FIELDS);
+  const [users, setUsers] = useState([])
+  const [currentUserId, setCurrentUserId] = useState("")
+  useQuery(ALL_USERS, {onCompleted: handleSetUsers});
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
+  function handleSetUsers(data) {
+    const payload = cleanPayload(data.userMany)
+    setUsers(payload)
+	  const userId = window.sessionStorage.getItem("userId")
+    if (userId) {
+      setCurrentUserId(userId)
+    }
+    else {
+      setCurrentUserId(payload[0]._id)
+      window.sessionStorage.setItem("userId", payload[0]._id);
+    }
+  }
 
-  return <pre>{JSON.stringify(data, null, 2)}</pre>
+  function handleUserChange(e) {
+    setCurrentUserId(e.target.value)
+    window.sessionStorage.setItem("userId", e.target.value)
+  }
+
+  return (
+    <div>
+      <h1>Homepage</h1>
+      {users.map((user) => {
+        return (
+          <div key={user._id}>
+            <input
+              id={user._id}
+              type="checkbox"
+              name={user.username}
+              value={user._id}
+              checked={currentUserId === user._id}
+              onChange={handleUserChange}>
+            </input>
+            <label htmlFor={user._id}>{user.username}</label>
+          </div>
+        )
+      })}
+    </div>
+  )
 }

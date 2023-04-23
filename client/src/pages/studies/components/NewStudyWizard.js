@@ -19,7 +19,7 @@ import { cleanPayload } from '../../../utils';
 const steps = ['Study details', 'Individual details', 'Questionnaire details'];
 
 export default function({cancelNewStudy}) {
-  const userId = "5cd99685-c55e-470a-b267-6ca24fe6f5c9"
+  const userId = window.sessionStorage.getItem("userId")
   const navigate = useNavigate()
   const [activeStep, setActiveStep] = useState(0);
   const [studyDetails, setStudyDetails] = useState([]);
