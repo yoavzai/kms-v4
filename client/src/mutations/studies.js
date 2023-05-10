@@ -5,40 +5,21 @@ export const CREATE_STUDY= gql`
 mutation studyCreateOne($record: CreateOneStudyInput!){
 	studyCreateOne(record: $record)
   {
-    record {
-      _id
-      creator_id
-      date_created
-      date_updated
-      is_deleted
-      individual_details {
-        type
-        key
-        mandatory
-        value
-        min_num
-        max_num
-        dropdown_options
-      }
-      study_details {
-        type
-        key
-        mandatory
-        value
-        min_num
-        max_num
-        dropdown_options
-      }
-      questionnaire_details {
-        type
-        key
-        mandatory
-        value
-        min_num
-        max_num
-        dropdown_options
-      }
-    }
+    recordId
+  }
+}
+`
+export const DELETE_STUDY_BY_ID = gql`
+  mutation StudyRemoveById($id: String!, $record: UpdateByIdStudyInput!) {
+  studyRemoveById(_id: $id, record: $record) {
+    recordId
+  }
+}
+`
+export const UPDATE_STUDY_BY_ID= gql`
+mutation StudyUpdateById($id: String!, $record: UpdateByIdStudyInput!) {
+  studyUpdateById(_id: $id, record: $record) {
+    recordId
   }
 }
 `

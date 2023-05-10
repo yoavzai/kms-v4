@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import {
   FormRenderer,
 } from '../../../components';
@@ -8,71 +8,53 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { GET_INDIVIDUAL_DETAILS_FIELDS, GET_QUESTIONNAIRE_DETAILS_FIELDS, GET_STUDY_DETAILS_FIELDS } from '../../../queries/fields';
-import { useMutation, useQuery } from '@apollo/client';
-import { useNavigate } from "react-router-dom";
 import NewFieldForm from './NewFieldForm'
-import { CREATE_STUDY } from '../../../mutations/studies';
-import { cleanPayload } from '../../../utils';
 
 
 const steps = ['Study details', 'Individual details', 'Questionnaire details'];
 
-export default function({cancelNewStudy}) {
-  const userId = window.sessionStorage.getItem("userId")
-  const navigate = useNavigate()
+export default function({cancelEditStudy, finishEditStudy, study}) {
   const [activeStep, setActiveStep] = useState(0);
   const [studyDetails, setStudyDetails] = useState([]);
   const [individualDetails, setIndividualDetails] = useState([]);
   const [questionnaireDetails, setQuestionnaireDetails] = useState([]);
   const [showNewFieldForm, setShowNewFieldForm] = useState(false);
-  useQuery(GET_STUDY_DETAILS_FIELDS, {onCompleted: handleSetStudyDetails});
-  useQuery(GET_INDIVIDUAL_DETAILS_FIELDS, {onCompleted: handleSetIndividualDetails});
-  useQuery(GET_QUESTIONNAIRE_DETAILS_FIELDS, {onCompleted: handleSetQuestionnaireDetails});
-  const [createStudy, {newStudy, loading, error}] = useMutation(CREATE_STUDY)
-
-
-  function handleSetStudyDetails(data) {
-    const payload = cleanPayload(data.fieldsOne.fields)
-    const arr = payload.map(field => {
-      return (
-        {
-          checked: false,
-          data: field
-        }
-      )
-    })
-    setStudyDetails(arr)
-  }
-
-  function handleSetIndividualDetails(data) {
-    const payload = cleanPayload(data.fieldsOne.fields)
-    const arr = payload.map(field => {
-      return (
-        {
-          checked: false,
-          data: field
-        }
-      )
-    })
-    setIndividualDetails(arr)
-  }
-
-  function handleSetQuestionnaireDetails(data) {
-    const payload = cleanPayload(data.fieldsOne.fields)
-    const arr = payload.map(field => {
-      return (
-        {
-          checked: false,
-          data: field
-        }
-      )
-    })
-    setQuestionnaireDetails(arr)
-  }
   
-  const handleFinish = async () => {
-    
+
+  useEffect(() => {
+    let arr = study.study_details.map(field => {
+        return (
+          {
+            checked: true,
+            data: field
+          }
+        )
+      })
+      setStudyDetails(arr)
+
+    arr = study.individual_details.map(field => {
+        return (
+          {
+            checked: true,
+            data: field
+          }
+        )
+      })
+      setIndividualDetails(arr)
+
+    arr = study.questionnaire_details.map(field => {
+        return (
+          {
+            checked: true,
+            data: field
+          }
+        )
+      })
+      setQuestionnaireDetails(arr)
+  }, [])
+
+
+  function handleFinish() {
     const getCheckedFields = (fields) => {
       const checkedFields = []
       for (const field of fields) {
@@ -84,14 +66,12 @@ export default function({cancelNewStudy}) {
     }
 
     const newStudyData = {
-      creator_id: userId,
       study_details: getCheckedFields(studyDetails),
       individual_details: getCheckedFields(individualDetails),
       questionnaire_details: getCheckedFields(questionnaireDetails),
     }
 
-    const res = await createStudy({variables: {record: newStudyData}})
-    navigate("/studies/" + res.data.studyCreateOne.recordId)
+    finishEditStudy(newStudyData)
   };
   
   const handleNext = () => {
@@ -104,7 +84,7 @@ export default function({cancelNewStudy}) {
   };
 
   const handleCancel = () => {
-    cancelNewStudy()
+    cancelEditStudy()
   }
 
   const handleCheckboxChange = (isChecked, key) => {

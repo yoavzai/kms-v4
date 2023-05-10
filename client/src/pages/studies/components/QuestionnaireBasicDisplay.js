@@ -5,25 +5,25 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function(props) {
-    const study = props.study
+    const questionnaire = props.questionnaire
     const navigate = useNavigate()
-	const [displayStudyDetails, setDisplayStudyDetails] = useState(false)
+	const [displayQuestionaireDetails, setDisplayQuestionnaireDetails] = useState(false)
 
 
 	function handleMouseEnter() {
-		setDisplayStudyDetails(true)
+		setDisplayQuestionnaireDetails(true)
 	}
 	function handleMouseLeave() {
-		setDisplayStudyDetails(false)
+		setDisplayQuestionnaireDetails(false)
 	}
     async function handleClick() {
-        navigate("/studies/" + study._id)
+        // navigate("/studies/" + study._id)
     }
 
 	return (
 		<div>
-            <Button id={study._id} onClick={handleClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{study.study_details.find(s => s.key === "name")?.value}</Button>
-            {displayStudyDetails && study.study_details.map((field, index) => {
+            <Button id={questionnaire._id} onClick={handleClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>{questionnaire.date_updated}</Button>
+            {displayQuestionaireDetails && questionnaire.questionnaire_details.map((field, index) => {
                 return (
                     <div key={index}>
                         <span>{field.key} - {field.value}</span>

@@ -4,7 +4,6 @@ import ConfigPage from './config';
 import UsersPage from './users';
 import ManualPage from './manual';
 import StudiesPage from './studies';
-import QuestionnairesPage from './questionnaires';
 
 export {
   Homepage,
@@ -13,5 +12,4 @@ export {
   UsersPage,
   ManualPage,
   StudiesPage,
-  QuestionnairesPage,
 };
