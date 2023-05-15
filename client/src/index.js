@@ -55,7 +55,7 @@ root.render(
         <Route path="login" element={<LoginPage />} />
         <Route path="studies" element={<StudiesPage />} />
         <Route path="studies/:studyId" element={<StudyDisplay />} />
-        <Route path="studies/:studyId/questionnaire/:questionnaireId" element={<QuestionnaireDisplay />} />
+        <Route path="studies/:studyId/questionnaires/:questionnaireId" element={<QuestionnaireDisplay />} />
         <Route path="manual" element={<ManualPage />} />
         <Route path="config" element={<ConfigPage />} />
         <Route path="users" element={<UsersPage />} />

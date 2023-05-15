@@ -29,7 +29,7 @@ export default function({cancelNewStudy}) {
   useQuery(GET_STUDY_DETAILS_FIELDS, {onCompleted: handleSetStudyDetails});
   useQuery(GET_INDIVIDUAL_DETAILS_FIELDS, {onCompleted: handleSetIndividualDetails});
   useQuery(GET_QUESTIONNAIRE_DETAILS_FIELDS, {onCompleted: handleSetQuestionnaireDetails});
-  const [createStudy, {newStudy, loading, error}] = useMutation(CREATE_STUDY)
+  const [createStudy] = useMutation(CREATE_STUDY)
 
 
   function handleSetStudyDetails(data) {
@@ -88,6 +88,7 @@ export default function({cancelNewStudy}) {
       study_details: getCheckedFields(studyDetails),
       individual_details: getCheckedFields(individualDetails),
       questionnaire_details: getCheckedFields(questionnaireDetails),
+      custom_templates: []
     }
 
     const res = await createStudy({variables: {record: newStudyData}})

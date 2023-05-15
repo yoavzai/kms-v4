@@ -17,7 +17,7 @@ export default function(props) {
 		setDisplayQuestionnaireDetails(false)
 	}
     async function handleClick() {
-        // navigate("/studies/" + study._id)
+        navigate("/studies/" + questionnaire.study_id + "/questionnaires/" + questionnaire._id)
     }
 
 	return (

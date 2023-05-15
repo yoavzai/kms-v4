@@ -9,11 +9,13 @@ import { Button } from "@mui/material";
 import { DELETE_STUDY_BY_ID, UPDATE_STUDY_BY_ID } from "../../../mutations/studies";
 import EditStudyWizard from "./EditStudyWizard";
 import QuestionnairesBrowser from "./QuestionnairesBrowser";
+import NewQuestionnaireWizard from "./NewQuestionnaireWizard";
 
 
 export default function() {
 
 	const navigate = useNavigate()
+	const [isNewQuestionnare, setIsNewQuestionnaire] = useState(false)
 	const [isDeleteStudyConfirmation, setIsDeleteStudyConfirmation] = useState(false)
 	const [isEditStudy, setIsEditStudy] = useState(false)
 	const { studyId } = useParams()
@@ -46,11 +48,20 @@ export default function() {
 		setIsEditStudy(false)
 	}
 
+	function handleNewQuestionnaireBtnClick() {
+		setIsNewQuestionnaire(true)
+	}
+
+	function handleCancelNewQuestionnaire() {
+		setIsNewQuestionnaire(false)
+	}
+
 	return (
 		<>
 			{Object.keys(study).length > 0 &&
 			<>
 				{isEditStudy ? <EditStudyWizard cancelEditStudy={handleCancelEditStudy} finishEditStudy={handleFinishEditStudy} study={study}></EditStudyWizard> :
+				isNewQuestionnare ? <NewQuestionnaireWizard cancelNewQuestionnaire={handleCancelNewQuestionnaire} study={study}></NewQuestionnaireWizard> :
 				<div>
 					<h3>Study Details</h3>
 					{study.study_details.map(field => {
@@ -64,6 +75,7 @@ export default function() {
 					<Button onClick={() => setIsEditStudy(true)}>Edit Study</Button>
 					<h3>Questionnaires</h3>
 					<QuestionnairesBrowser studyId={studyId}></QuestionnairesBrowser>
+					<Button onClick={handleNewQuestionnaireBtnClick}>New Questionnaire</Button>
 				</div>
 				}
 				{isDeleteStudyConfirmation && <ConfirmationDialog handleCancel={handleCancelDeleteStudy} handleOk={handleOkDeleteStudy}></ConfirmationDialog>}

@@ -27,6 +27,15 @@ export const STUDY_BY_ID = gql`
         date_created
         date_updated
         is_deleted
+        custom_templates {
+            _id
+            name
+            language
+            inputs {
+                input_id
+                name
+            }
+        }
         individual_details {
             type
             key
