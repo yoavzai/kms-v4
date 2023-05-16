@@ -37,7 +37,7 @@ export default function({cancelNewStudy}) {
     const arr = payload.map(field => {
       return (
         {
-          checked: false,
+          checked: field.mandatory ? true : false,
           data: field
         }
       )
@@ -50,7 +50,7 @@ export default function({cancelNewStudy}) {
     const arr = payload.map(field => {
       return (
         {
-          checked: false,
+          checked: field.mandatory ? true : false,
           data: field
         }
       )
@@ -63,7 +63,7 @@ export default function({cancelNewStudy}) {
     const arr = payload.map(field => {
       return (
         {
-          checked: false,
+          checked: field.mandatory ? true : false,
           data: field
         }
       )
@@ -113,7 +113,7 @@ export default function({cancelNewStudy}) {
       case 0:
         {
           const newStudyDetails = studyDetails.map(field => {
-            if (field.data.key === key) {
+            if (field.data.key === key && !field.data.mandatory) {
               return {checked: isChecked, data: field.data}
             }
             return field
@@ -124,7 +124,7 @@ export default function({cancelNewStudy}) {
       case 1:
         {
           const newIndividualDetails = individualDetails.map(field => {
-            if (field.data.key === key) {
+            if (field.data.key === key && !field.data.mandatory) {
               return {checked: isChecked, data: field.data}
             }
             return field
@@ -135,7 +135,7 @@ export default function({cancelNewStudy}) {
       case 2:
         {
           const newQuestionnaireDetails = questionnaireDetails.map(field => {
-            if (field.data.key === key) {
+            if (field.data.key === key && !field.data.mandatory) {
               return {checked: isChecked, data: field.data}
             }
             return field

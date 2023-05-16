@@ -92,7 +92,7 @@ export default function({cancelEditStudy, finishEditStudy, study}) {
       case 0:
         {
           const newStudyDetails = studyDetails.map(field => {
-            if (field.data.key === key) {
+            if (field.data.key === key && !field.data.mandatory) {
               return {checked: isChecked, data: field.data}
             }
             return field
@@ -103,7 +103,7 @@ export default function({cancelEditStudy, finishEditStudy, study}) {
       case 1:
         {
           const newIndividualDetails = individualDetails.map(field => {
-            if (field.data.key === key) {
+            if (field.data.key === key && !field.data.mandatory) {
               return {checked: isChecked, data: field.data}
             }
             return field
@@ -114,7 +114,7 @@ export default function({cancelEditStudy, finishEditStudy, study}) {
       case 2:
         {
           const newQuestionnaireDetails = questionnaireDetails.map(field => {
-            if (field.data.key === key) {
+            if (field.data.key === key && !field.data.mandatory) {
               return {checked: isChecked, data: field.data}
             }
             return field

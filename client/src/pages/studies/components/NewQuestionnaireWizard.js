@@ -16,6 +16,7 @@ import { GET_TEMPLATES } from '../../../queries/templates';
 import { GET_TRANSLATIONS } from '../../../queries/translations';
 import { cleanPayload } from '../../../utils';
 import { UPDATE_STUDY_BY_ID } from '../../../mutations/studies';
+import { Dialog, DialogActions, DialogTitle } from '@mui/material';
 
 const { v4 } = require('uuid');
 const steps = ['Individual details', 'Questionnaire details', 'Inputs', 'Summary'];
@@ -35,7 +36,8 @@ export default function({cancelNewQuestionnaire, study}) {
   useQuery(GET_TEMPLATES, {onCompleted: handleSetGlobalTemplates})
   const [loadTranslations] = useLazyQuery(GET_TRANSLATIONS)
 	const [updateStudy] = useMutation(UPDATE_STUDY_BY_ID)
-
+  const [isLanguageError, setIsLangugeError] = useState(false)
+  const [isTemplateError, setIsTemplateError] = useState(false)
 
   function handleSetGlobalTemplates(data) {
     const templates = cleanPayload(data.templateMany)
@@ -94,7 +96,16 @@ export default function({cancelNewQuestionnaire, study}) {
   
   const handleNext = async () => {
     if (activeStep === 1) {
+      const language = getLanguage()
+      if (language.length === 0) {
+        setIsLangugeError(true)
+        return
+      }
       await handleSetFilteredTemplates()
+    }
+    else if (activeStep === 2 && Object.keys(chosenTemplate).length === 0) {
+      setIsTemplateError(true)
+      return
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -173,6 +184,32 @@ export default function({cancelNewQuestionnaire, study}) {
 
   return (
     <Box sx={{ width: '100%' }}>
+      {isLanguageError &&
+      <Dialog
+        open={true}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {"Must select a Language"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => setIsLangugeError(false)}>Ok</Button>
+        </DialogActions>
+      </Dialog>
+      }
+      {isTemplateError &&
+      <Dialog
+        open={true}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {"Must select a Template"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => setIsTemplateError(false)}>Ok</Button>
+        </DialogActions>
+      </Dialog>
+      }
       <Stepper activeStep={activeStep}>
         {steps.map((label) => {
           return (
