@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ConfirmationDialog({handleCancel, handleOk}) {
+export default function ConfirmationDialog({handleCancel, handleOk, message}) {
 
   return (
     <div>
@@ -14,7 +14,7 @@ export default function ConfirmationDialog({handleCancel, handleOk}) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Delete This Study?"}
+          {message}
         </DialogTitle>
         <DialogActions>
           <Button onClick={handleCancel}>Cancel</Button>

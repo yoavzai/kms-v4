@@ -66,3 +66,24 @@ export const STUDY_BY_ID = gql`
     }
 }
 `
+
+export const STUDY_BASIC_DETAILS_BY_ID = gql`
+    query StudyById($id: String!) {
+    studyById(_id: $id) {
+        _id
+        creator_id
+        date_created
+        date_updated
+        is_deleted
+        study_details {
+            type
+            key
+            mandatory
+            value
+            min_num
+            max_num
+            dropdown_options
+        }
+    }
+}
+`

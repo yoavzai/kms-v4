@@ -78,7 +78,7 @@ export default function() {
 					<Button onClick={handleNewQuestionnaireBtnClick}>New Questionnaire</Button>
 				</div>
 				}
-				{isDeleteStudyConfirmation && <ConfirmationDialog handleCancel={handleCancelDeleteStudy} handleOk={handleOkDeleteStudy}></ConfirmationDialog>}
+				{isDeleteStudyConfirmation && <ConfirmationDialog handleCancel={handleCancelDeleteStudy} handleOk={handleOkDeleteStudy} message={"Are you sure you want to delete this study?"}></ConfirmationDialog>}
 			</>
 			}
 		</>
