@@ -1,5 +1,5 @@
 const { mongoose } = require('mongoose');
-const { field_template } = require('./../fields/fields.mongoSchema')
+const { field_template } = require('./../fields/fields.mongoSchema');
 
 
 const StudySchema = new mongoose.Schema({
@@ -8,6 +8,7 @@ const StudySchema = new mongoose.Schema({
   study_details: [field_template],
   individual_details: [field_template],
   questionnaire_details: [field_template],
+  custom_templates: [{_id: String, name: String, language: String, inputs: [{input_id: Number, name: String}]}],
   date_created: Date,
   date_updated: Date,
   is_deleted: Boolean

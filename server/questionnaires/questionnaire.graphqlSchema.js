@@ -12,7 +12,10 @@ function addQuestionnairesGraphqlSchema() {
       questionnaireById: QuestionnaireTC.mongooseResolvers.findById(),
       questionnaireByIds: QuestionnaireTC.mongooseResolvers.findByIds(),
       questionnaireOne: QuestionnaireTC.mongooseResolvers.findOne(),
-      questionnaireMany: QuestionnaireTC.mongooseResolvers.findMany(),
+      questionnaireMany: QuestionnaireTC.mongooseResolvers.findMany().wrap(newResolver => {
+        newResolver.getArgTC('sort').addFields({date_updated: {value: {date_updated: -1}}}) // -1 is desc, 1 is asc
+        return newResolver
+      }),
     });
     
     schemaComposer.Mutation.addFields({

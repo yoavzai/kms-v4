@@ -12,7 +12,10 @@ function addStudiesGraphqlSchema() {
       studyById: StudyTC.mongooseResolvers.findById(),
       studyByIds: StudyTC.mongooseResolvers.findByIds(),
       studyOne: StudyTC.mongooseResolvers.findOne(),
-      studyMany: StudyTC.mongooseResolvers.findMany(),
+      studyMany: StudyTC.mongooseResolvers.findMany().wrap(newResolver => {
+        newResolver.getArgTC('sort').addFields({date_updated: {value: {date_updated: -1}}}) // -1 is desc, 1 is asc
+        return newResolver
+      })
     });
     
     schemaComposer.Mutation.addFields({

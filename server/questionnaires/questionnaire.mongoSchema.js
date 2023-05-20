@@ -29,5 +29,6 @@ const QuestionnaireSchema = new mongoose.Schema({
 const QuestionnaireModel = mongoose.model('Questionnaire', QuestionnaireSchema);
 
 module.exports = {
-  QuestionnaireModel
+  QuestionnaireModel,
+  input_template
 }
