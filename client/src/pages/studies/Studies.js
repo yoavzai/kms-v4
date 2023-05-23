@@ -20,8 +20,9 @@ export default function() {
   return (
     <>
       <h1>Studies page</h1>
-      {isNewStudy ?
-        <NewStudyWizard cancelNewStudy={handleCancelNewStudy}/>
+      {
+				isNewStudy
+				? <NewStudyWizard cancelNewStudy={handleCancelNewStudy}/>
         :
         <div>
           <StudiesBrowser />
