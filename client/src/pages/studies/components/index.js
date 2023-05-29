@@ -1,11 +1,6 @@
-import StudiesBrowser from './StudiesBrowser';
-import NewStudyWizard from './NewStudyWizard';
-import NewFieldForm from './NewFieldForm';
-import StudyBasicDisplay from './StudyBasicDisplay';
+import NewStudyWizard from "./newStudyWizard";
+import StudiesBrowser from "./studiesBrowser";
+import QuestionnaireDisplay from "./questionnaireDisplay";
+import StudyDisplay from "./studyDisplay";
 
-export {
-	StudiesBrowser,
-  NewStudyWizard,
-  NewFieldForm,
-  StudyBasicDisplay
-};
+export { NewStudyWizard, StudiesBrowser, QuestionnaireDisplay, StudyDisplay };

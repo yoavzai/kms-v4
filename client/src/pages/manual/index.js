@@ -1,3 +1,3 @@
-import ManualPage from './Manual';
+import ManualPage from "./Manual";
 
 export default ManualPage;

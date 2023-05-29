@@ -1,3 +1,3 @@
-import StudiesPage from './Studies';
+import StudiesPage from "./Studies";
 
 export default StudiesPage;
