@@ -5,23 +5,24 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Input,
   TextField,
 } from "@mui/material";
 import { CREATE_IMAGE } from "../../../../../../../../mutations/images";
 import { useMutation } from "@apollo/client";
+import { MuiFileInput } from "mui-file-input";
 
 export default function ({ input, cancel, save }) {
   const [newText, setNewText] = useState(input.answer.text);
   const [newImageFile, setNewImageFile] = useState(null);
   const [createImage] = useMutation(CREATE_IMAGE);
-
-  function handleUploadImage(e) {
-    setNewImageFile(e.target.files[0]);
-  }
+  const [isFileSizeError, setIsFileSizeError] = useState(false);
 
   function handleSave() {
     if (newImageFile) {
+      if (newImageFile.size > 1000000) {
+        setIsFileSizeError(true);
+        return;
+      }
       const reader = new FileReader();
       reader.readAsDataURL(newImageFile);
       reader.onload = async function (e) {
@@ -50,6 +51,20 @@ export default function ({ input, cancel, save }) {
 
   return (
     <Dialog open>
+      {isFileSizeError && (
+        <Dialog
+          open={true}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"File too big. max size 10mb"}
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={() => setIsFileSizeError(false)}>Ok</Button>
+          </DialogActions>
+        </Dialog>
+      )}
       <DialogContent>
         <DialogTitle>{input.name}</DialogTitle>
         <TextField
@@ -59,7 +74,11 @@ export default function ({ input, cancel, save }) {
       </DialogContent>
       <DialogActions>
         <Button onClick={cancel}>cancel</Button>
-        <Input onChange={handleUploadImage} type="file" />
+        <MuiFileInput
+          label={"upload image"}
+          value={newImageFile}
+          onChange={(e) => setNewImageFile(e)}
+        />
         <Button onClick={handleSave}>save</Button>
       </DialogActions>
     </Dialog>

@@ -33,7 +33,7 @@ export default function ({
   }
 
   async function handleOkDeleteQuestionnaire() {
-    await deleteQuestionnaire();
+    await deleteQuestionnaire(questionnaire._id);
   }
 
   function handleCancelEditQuestionnaire() {

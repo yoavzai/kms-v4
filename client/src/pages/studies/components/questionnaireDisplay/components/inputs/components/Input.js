@@ -54,7 +54,7 @@ export default function ({ input, updateInput }) {
       <div>
         <Button onClick={() => setIsEditInput(true)}>edit</Button>
         <Button onClick={() => setIsDisplayCodings(true)}>codings</Button>
-        {image !== null && (
+        {currentInput.answer.image_id.length > 0 && (
           <Button onClick={() => setIsDisplayImage(true)}>image</Button>
         )}
       </div>
