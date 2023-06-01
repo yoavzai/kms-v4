@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
   TextField,
 } from "@mui/material";
 import { Codings, EditInput } from "./components";
@@ -69,7 +70,11 @@ export default function ({ input, updateInput }) {
         </Dialog>
       )}
       {isDisplayCodings && (
-        <Codings input={currentInput} close={handleCloseCodings}></Codings>
+        <Codings
+          input={currentInput}
+          close={handleCloseCodings}
+          save={handleSave}
+        ></Codings>
       )}
       {isEditInput && (
         <EditInput
