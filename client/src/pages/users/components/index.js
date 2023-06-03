@@ -1,5 +1,3 @@
-import UsersBrowser from './UsersBrowser';
+import UsersBrowser from "./UsersBrowser";
 
-export {
-	UsersBrowser
-};
+export { UsersBrowser };

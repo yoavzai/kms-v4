@@ -1,5 +1,4 @@
-const { mongoose } = require('mongoose');
-
+const { mongoose } = require("mongoose");
 
 const coding_template = {
   _id: String,
@@ -13,14 +12,18 @@ const coding_template = {
   fe: String,
   ss: String,
   mm: String,
-  comment: String
-}
+  status: String,
+  comment: String,
+};
 
-const ApprovedCodingsSchema = new mongoose.Schema(coding_template)
+const ApprovedCodingsSchema = new mongoose.Schema(coding_template);
 
-const ApprovedCodingsModel = mongoose.model('Approved_Codings', ApprovedCodingsSchema);
+const ApprovedCodingsModel = mongoose.model(
+  "Approved_Codings",
+  ApprovedCodingsSchema
+);
 
 module.exports = {
   ApprovedCodingsModel,
-  coding_template
-}
+  coding_template,
+};

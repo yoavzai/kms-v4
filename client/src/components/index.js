@@ -1,5 +1,5 @@
-import FormRenderer from './FormRenderer';
+import FormRenderer from "./FormRenderer";
+import ConfirmationDialog from "./ConfirmationDialog";
+import NewFieldForm from "./NewFieldForm";
 
-export {
-  FormRenderer,
-};
+export { FormRenderer, ConfirmationDialog, NewFieldForm };

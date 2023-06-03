@@ -1,3 +1,3 @@
-import UsersPage from './Users';
+import UsersPage from "./Users";
 
 export default UsersPage;
