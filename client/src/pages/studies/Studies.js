@@ -1,33 +1,17 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { StudiesBrowser, NewStudyWizard } from "./components";
-import { Button, Dialog, DialogContent } from "@mui/material";
+import { Button } from "@mui/material";
 
 export default function () {
-  const [isNewStudy, setIsNewStudy] = useState(false);
-
-  function handleNewStudyBtnClick() {
-    setIsNewStudy(true);
-  }
-
-  function handleCancelNewStudy() {
-    setIsNewStudy(false);
-  }
+  const [open, flip] = useReducer(s => !s, false);
 
   return (
     <>
-      <div>
-        <h2>Studies</h2>
-        <StudiesBrowser />
-        <Button onClick={handleNewStudyBtnClick}>New Study</Button>
-      </div>
-      {isNewStudy && (
-        <div>
-          <Dialog open>
-            <DialogContent>
-              <NewStudyWizard cancelNewStudy={handleCancelNewStudy} />
-            </DialogContent>
-          </Dialog>
-        </div>
+      <h2>Studies</h2>
+      <StudiesBrowser />
+      <Button onClick={flip}>New Study</Button>
+      {open && (
+        <NewStudyWizard isOpen={true} cancelNewStudy={flip} />
       )}
     </>
   );

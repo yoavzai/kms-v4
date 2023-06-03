@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import React, { useState, Fragment, useReducer } from "react";
 import { FormRenderer, NewFieldForm } from "../../../../components";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -15,7 +15,10 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { CREATE_STUDY } from "../../../../mutations/studies";
 import { cleanPayload } from "../../../../utils";
-import { Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+
+import Add from '@mui/icons-material/Add';
+import { Summary, Alert } from './components';
 
 const steps = [
   "Study details",
@@ -24,7 +27,13 @@ const steps = [
   "Summary",
 ];
 
-export default function ({ cancelNewStudy }) {
+export default function ({ isOpen, cancelNewStudy }) {
+  // const [state, setState] = useReducer(reducer, { 
+  const [state, setState] = useState({ 
+    ["Study details"]: [],
+    ["Individual details"]: [],
+    ["Questionnaire details"]: [],
+  });
   const userId = window.sessionStorage.getItem("userId");
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
@@ -32,15 +41,15 @@ export default function ({ cancelNewStudy }) {
   const [individualDetails, setIndividualDetails] = useState([]);
   const [questionnaireDetails, setQuestionnaireDetails] = useState([]);
   const [showNewFieldForm, setShowNewFieldForm] = useState(false);
-  useQuery(GET_STUDY_DETAILS_FIELDS, { onCompleted: handleSetStudyDetails });
-  useQuery(GET_INDIVIDUAL_DETAILS_FIELDS, {
-    onCompleted: handleSetIndividualDetails,
-  });
-  useQuery(GET_QUESTIONNAIRE_DETAILS_FIELDS, {
-    onCompleted: handleSetQuestionnaireDetails,
-  });
-  const [createStudy] = useMutation(CREATE_STUDY);
   const [isNameError, setIsNameError] = useState(false);
+
+  const [createStudy] = useMutation(CREATE_STUDY);
+  //useQuery(GET_STUDY_DETAILS_FIELDS, { onCompleted: setState("Study details") });
+  useQuery(GET_STUDY_DETAILS_FIELDS, { onCompleted: handleSetStudyDetails });
+  useQuery(GET_INDIVIDUAL_DETAILS_FIELDS, { onCompleted: handleSetIndividualDetails });
+  useQuery(GET_QUESTIONNAIRE_DETAILS_FIELDS, { onCompleted: handleSetQuestionnaireDetails });
+
+  const [alertState, setAlertState] = useState({ message: '', severity: '', open: false })
 
   function getName() {
     const field = studyDetails.find((f) => f.data.key === "name");
@@ -48,36 +57,24 @@ export default function ({ cancelNewStudy }) {
   }
 
   function handleSetStudyDetails(data) {
-    const payload = cleanPayload(data.fieldsOne.fields);
-    const arr = payload.map((field) => {
-      return {
-        checked: field.mandatory ? true : false,
-        data: field,
-      };
-    });
-    setStudyDetails(arr);
+    setStudyDetails(cleanPayload(data.fieldsOne.fields).map(field => ({
+      checked: !!field.mandatory,
+      data: field,
+    })));
   }
 
   function handleSetIndividualDetails(data) {
-    const payload = cleanPayload(data.fieldsOne.fields);
-    const arr = payload.map((field) => {
-      return {
-        checked: field.mandatory ? true : false,
+    setIndividualDetails(cleanPayload(data.fieldsOne.fields).map((field) => ({
+        checked: !!field.mandatory,
         data: field,
-      };
-    });
-    setIndividualDetails(arr);
+    })));
   }
 
   function handleSetQuestionnaireDetails(data) {
-    const payload = cleanPayload(data.fieldsOne.fields);
-    const arr = payload.map((field) => {
-      return {
-        checked: field.mandatory ? true : false,
-        data: field,
-      };
-    });
-    setQuestionnaireDetails(arr);
+    setQuestionnaireDetails(cleanPayload(data.fieldsOne.fields).map((field) => ({
+      checked: !!field.mandatory,
+      data: field,
+    })));
   }
 
   const handleFinish = async () => {
@@ -105,7 +102,11 @@ export default function ({ cancelNewStudy }) {
 
   const handleNext = () => {
     if (activeStep === 0 && getName().length === 0) {
-      setIsNameError(true);
+      setAlertState({
+        message: "'Study Name' was not set.",
+        severity: "error",
+        open: true
+      });
       return;
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -113,10 +114,6 @@ export default function ({ cancelNewStudy }) {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleCancel = () => {
-    cancelNewStudy();
   };
 
   const handleCheckboxChange = (isChecked, key) => {
@@ -222,116 +219,87 @@ export default function ({ cancelNewStudy }) {
     setShowNewFieldForm(true);
   }
 
-  function Summary() {
-    return (
-      <div>
-        <h3>Study Details</h3>
-        {studyDetails
-          .filter((f) => f.checked)
-          .map((field) => {
-            return (
-              <div key={field.data.key}>
-                <span>
-                  {field.data.key} - {field.data.value}
-                </span>
-              </div>
-            );
-          })}
-        <h3>Individual Details</h3>
-        {individualDetails
-          .filter((f) => f.checked)
-          .map((field) => {
-            return (
-              <div key={field.data.key}>
-                <span>
-                  {field.data.key} - {field.data.value}
-                </span>
-              </div>
-            );
-          })}
-        <h3>Questionnaire Details</h3>
-        {questionnaireDetails
-          .filter((f) => f.checked)
-          .map((field) => {
-            return (
-              <div key={field.data.key}>
-                <span>
-                  {field.data.key} - {field.data.value}
-                </span>
-              </div>
-            );
-          })}
-      </div>
-    );
-  }
-
   return (
-    <Box sx={{ width: "100%" }}>
-      {isNameError && (
-        <Dialog
-          open={true}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Must select a Name"}
-          </DialogTitle>
-          <DialogActions>
-            <Button onClick={() => setIsNameError(false)}>Ok</Button>
-          </DialogActions>
-        </Dialog>
-      )}
+    <Dialog scroll='paper' open={isOpen}>
+      <DialogTitle>
       <Stepper activeStep={activeStep}>
-        {steps.map((label) => {
-          return (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          );
-        })}
+        {steps.map((label) =>
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        )}
       </Stepper>
-      <Fragment>
-        <Typography component={"div"} sx={{ mt: 2, mb: 1 }}>
-          {steps[activeStep] === "Summary" ? (
-            <Summary />
-          ) : (
-            <FormRenderer
-              isCheckbox={true}
-              fields={
-                activeStep === 0
-                  ? studyDetails
-                  : activeStep === 1
-                  ? individualDetails
-                  : questionnaireDetails
-              }
-              handleValueChange={handleValueChange}
-              handleCheckboxChange={handleCheckboxChange}
-            />
-          )}
-        </Typography>
-        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-          <Button
-            color="inherit"
-            disabled={activeStep === 0}
-            onClick={handleBack}
-            sx={{ mr: 1 }}
+      </DialogTitle>
+      <DialogContent dividers>
+        <Box sx={{ width: "100%" }}>
+          <Dialog
+            open={isNameError}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
           >
-            Back
-          </Button>
-          <Button onClick={handleCancel}>Cancel</Button>
-          {showNewFieldForm ? (
-            <NewFieldForm create={createNewField} cancel={cancelNewField} />
-          ) : (
-            <Button onClick={handleNewFieldFormClick}>Add Field</Button>
-          )}
-          <Box sx={{ flex: "1 1 auto" }} />
-          {activeStep < steps.length - 1 ? (
-            <Button onClick={handleNext}>Next</Button>
-          ) : (
-            <Button onClick={handleFinish}>Finish</Button>
-          )}
+            <DialogTitle id="alert-dialog-title">
+              {"Must select a Name"}
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={() => setIsNameError(false)}>Ok</Button>
+            </DialogActions>
+          </Dialog>
+          <Fragment>
+            <Typography component={"div"} sx={{ mt: 2, mb: 1 }}>
+              {steps[activeStep] === "Summary" ? (
+                <Summary
+                  studyDetails={studyDetails}
+                  individualDetails={individualDetails}
+                  questionnaireDetails={questionnaireDetails}
+                />
+              ) : (
+                <FormRenderer
+                  isCheckbox={true}
+                  fields={
+                    activeStep === 0
+                      ? studyDetails
+                      : activeStep === 1
+                      ? individualDetails
+                      : questionnaireDetails
+                  }
+                  handleValueChange={handleValueChange}
+                  handleCheckboxChange={handleCheckboxChange}
+                />
+              )}
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+              {activeStep < (steps.length - 1) && (
+                <Button
+                  color="secondary"
+                  startIcon={<Add />}
+                  onClick={handleNewFieldFormClick}
+                  sx={{ml: 'auto', mr: 'auto'}}
+                >
+                  {
+                  activeStep === 0
+                  ? 'Add custom \'Study Details\' field'
+                  : activeStep === 1
+                  ? 'Add custom \'Individual Details\' field'
+                  : 'Add custom \'Questionnaire Details\' field'
+                  }
+                </Button>
+              )}
+              {showNewFieldForm && (
+                <NewFieldForm create={createNewField} cancel={cancelNewField} />
+              )}
+            </Box>
+          </Fragment>
+          <Alert {...alertState} onClose={() => setAlertState({ ...alertState, open: false})} />
         </Box>
-      </Fragment>
-    </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={cancelNewStudy} sx={{mr: 'auto'}}>Cancel</Button>
+        <Button variant='outlined' disabled={activeStep === 0} onClick={handleBack}>Back</Button>
+        {(activeStep === steps.length - 1)
+          ? <Button onClick={handleFinish}>Finish</Button>
+          : <Button onClick={handleNext}>Next</Button>
+        }
+      </DialogActions>
+    </Dialog>
   );
 }

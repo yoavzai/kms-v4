@@ -1,4 +1,7 @@
+import { Fragment } from "react";
 import { InputLabel, TextField, Slider, Select, MenuItem } from "@mui/material";
+import Checkbox from '@mui/material/Checkbox';
+import Grid from '@mui/material/Grid';
 
 function renderField(field, handleValueChange) {
   const { type, key, mandatory, value, min_num, max_num, dropdown_options } =
@@ -14,6 +17,7 @@ function renderField(field, handleValueChange) {
             onChange={({ target: { value: newValue } }) =>
               handleValueChange(newValue, key)
             }
+            sx={{width:'100%'}}
           />
         </div>
       );
@@ -28,6 +32,7 @@ function renderField(field, handleValueChange) {
             onChange={({ target: { value: newValue } }) =>
               handleValueChange(newValue, key)
             }
+            sx={{width:'100%'}}
           />
         </div>
       );
@@ -41,6 +46,7 @@ function renderField(field, handleValueChange) {
             onChange={({ target: { value: newValue } }) =>
               handleValueChange(newValue, key)
             }
+            sx={{width:'100%'}}
           />
         </div>
       );
@@ -54,6 +60,7 @@ function renderField(field, handleValueChange) {
             onChange={({ target: { value: newValue } }) =>
               handleValueChange(newValue, key)
             }
+            sx={{width:'100%'}}
             inputProps={{ min: min_num, max: max_num }}
           />
         </div>
@@ -68,6 +75,7 @@ function renderField(field, handleValueChange) {
             onChange={({ target: { value: newValue } }) =>
               handleValueChange(newValue, key)
             }
+            sx={{width:'100%'}}
           >
             {options.map((option, index) => (
               <MenuItem key={index} value={option}>
@@ -87,25 +95,28 @@ export default function ({
   handleCheckboxChange,
 }) {
   return (
-    <>
-      {fields.map((field, index) => {
+    <Grid container spacing={0}>
+      {fields.map((field) => {
         const field_data = isCheckbox ? field.data : field;
         return (
-          <div key={index}>
-            {isCheckbox && (
-              <input
-                disabled={field_data.mandatory}
-                type="checkbox"
-                checked={field.checked}
-                onChange={({ target: { checked } }) =>
-                  handleCheckboxChange(checked, field_data.key)
-                }
-              />
-            )}
-            {renderField(field_data, handleValueChange)}
-          </div>
+          <Fragment key={field_data.key}>
+            <Grid item xs={isCheckbox ? 1 : 0} sx={{mt: 'auto', mb: 'auto'}} >
+              {isCheckbox && (
+                <Checkbox
+                  disabled={field_data.mandatory}
+                  checked={field.checked}
+                  onChange={({ target: { checked } }) =>
+                    handleCheckboxChange(checked, field_data.key)
+                  }
+                />
+              )}
+            </Grid>
+            <Grid item xs={isCheckbox ? 11 : 12} >
+              {renderField(field_data, handleValueChange)}
+            </Grid>
+          </Fragment>
         );
       })}
-    </>
+    </Grid>
   );
 }
