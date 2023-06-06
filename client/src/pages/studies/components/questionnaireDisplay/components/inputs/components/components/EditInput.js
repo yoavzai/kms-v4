@@ -7,7 +7,10 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import { CREATE_IMAGE } from "../../../../../../../../mutations/images";
+import {
+  CREATE_IMAGE,
+  DELETE_IMAGE_BY_ID,
+} from "../../../../../../../../mutations/images";
 import { useMutation } from "@apollo/client";
 import { MuiFileInput } from "mui-file-input";
 
@@ -15,6 +18,7 @@ export default function ({ input, cancel, save }) {
   const [newText, setNewText] = useState(input.answer.text);
   const [newImageFile, setNewImageFile] = useState(null);
   const [createImage] = useMutation(CREATE_IMAGE);
+  const [deleteImage] = useMutation(DELETE_IMAGE_BY_ID);
   const [isFileSizeError, setIsFileSizeError] = useState(false);
 
   function handleSave() {
@@ -37,7 +41,7 @@ export default function ({ input, cancel, save }) {
           name: newImageFile.name,
           bindata: e.target.result,
         };
-        //delete old image from db if exists
+        deleteImage({ variables: { id: input.answer.image_id } });
         const newInput = {
           ...input,
           answer: { ...input.answer, text: newText, image_id: newImageId },
