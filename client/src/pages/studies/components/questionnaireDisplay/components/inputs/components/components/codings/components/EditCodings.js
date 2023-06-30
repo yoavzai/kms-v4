@@ -7,10 +7,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import { Button, DialogActions } from "@mui/material";
-import { CodingsRow, EditRow } from "./components";
+import { EditCodingsRow, EditRow } from "./components";
 
-const { v4 } = require("uuid");
 const emptyRow = {
+  approved_coding_id: "",
   referent: "",
   meaning_value: "",
   sr: "",
@@ -21,8 +21,8 @@ const emptyRow = {
   fe: "",
   ss: "",
   mm: "",
-  status: "",
   comment: "",
+  status: "No",
 };
 
 export default function ({ save, cancel, codingsFields, codings }) {
@@ -38,7 +38,6 @@ export default function ({ save, cancel, codingsFields, codings }) {
   }
 
   function handleAddRow(newRow) {
-    newRow["_id"] = v4();
     setNewCodings([...newCodings, newRow]);
     setIsNewRow(false);
   }
@@ -75,13 +74,14 @@ export default function ({ save, cancel, codingsFields, codings }) {
           </TableHead>
           <TableBody>
             {newCodings.map((row, index) => (
-              <CodingsRow
+              <EditCodingsRow
+                key={index}
                 row={row}
                 index={index}
                 remove={handleRemoveRow}
                 save={handleEditRow}
                 codingsFields={codingsFields}
-              ></CodingsRow>
+              ></EditCodingsRow>
             ))}
           </TableBody>
         </Table>

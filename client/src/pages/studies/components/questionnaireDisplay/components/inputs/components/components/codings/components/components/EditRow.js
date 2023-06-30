@@ -6,17 +6,30 @@ export default function ({ row, finish, cancel, codingsFields }) {
   const [formFields, setFormFields] = useState([]);
 
   useEffect(() => {
-    const form = codingsFields.map((field) => {
-      return { ...field, value: row[field.key] };
-    });
+    const form = codingsFields
+      .filter(
+        (field) => field.key !== "status" && field.key !== "approved_coding_id"
+      )
+      .map((field) => {
+        return { ...field, value: row[field.key] };
+      });
     setFormFields(form);
   }, []);
 
   function handleSubmit() {
-    const newRow = {};
+    const newRow = {
+      status: row.status,
+      approved_coding_id: row.approved_coding_id,
+    };
     for (const field of formFields) {
       newRow[field.key] = field.value;
     }
+    finish(newRow);
+  }
+
+  function handleSubmitApproved(approved) {
+    let newRow = { ...approved, approved_coding_id: approved._id };
+    delete newRow["_id"];
     finish(newRow);
   }
 

@@ -1,5 +1,5 @@
 import { Delete, Edit } from "@mui/icons-material";
-import { IconButton, TableCell, TableRow } from "@mui/material";
+import { IconButton, TableCell, TableRow, Checkbox } from "@mui/material";
 import { useState } from "react";
 import EditRow from "./EditRow";
 
@@ -36,15 +36,19 @@ export default function ({ row, index, remove, save, codingsFields }) {
         <TableCell>{row.fe}</TableCell>
         <TableCell>{row.ss}</TableCell>
         <TableCell>{row.mm}</TableCell>
-        <TableCell>{row.status}</TableCell>
         <TableCell>{row.comment}</TableCell>
+        <TableCell>
+          <Checkbox checked={row.status === "Yes"} disabled={true}></Checkbox>
+        </TableCell>
         <TableCell>
           <IconButton onClick={handleDeleteRow}>
             <Delete />
           </IconButton>
-          <IconButton onClick={() => setIsEditRow(true)}>
-            <Edit />
-          </IconButton>
+          {row.status === "No" && (
+            <IconButton onClick={() => setIsEditRow(true)}>
+              <Edit />
+            </IconButton>
+          )}
         </TableCell>
       </TableRow>
     </>

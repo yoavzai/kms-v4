@@ -1,4 +1,4 @@
-import CodingsRow from "./CodingsRow";
+import EditCodingsRow from "./EditCodingsRow";
 import EditRow from "./EditRow";
 
-export { CodingsRow, EditRow };
+export { EditCodingsRow, EditRow };

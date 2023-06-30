@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import { GET_CODINGS_FIELDS } from "../../../../../../../../../queries/fields";
 import { useState } from "react";
 import { cleanPayload } from "../../../../../../../../../utils";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   Button,
   Dialog,
@@ -17,9 +17,16 @@ import {
   DialogTitle,
 } from "@mui/material";
 import EditCodings from "./components";
+import CodingsRow from "./components/CodingsRow";
+import {
+  CREATE_APPROVED_CODING,
+  DELETE_APPROVED_CODING_BY_ID,
+} from "../../../../../../../../../mutations/codings";
 
 export default function ({ input, close, save }) {
   useQuery(GET_CODINGS_FIELDS, { onCompleted: handleSetCodingsFields });
+  const [createApprovedCoding] = useMutation(CREATE_APPROVED_CODING);
+  const [deleteApprovedCoding] = useMutation(DELETE_APPROVED_CODING_BY_ID);
   const [codingsFields, setCodingsFields] = useState([]);
   const [isEditCodings, setIsEditCodings] = useState(false);
 
@@ -39,6 +46,30 @@ export default function ({ input, close, save }) {
 
   function handleCancelEdit() {
     setIsEditCodings(false);
+  }
+
+  async function changeApprovedCodingStatus(newRow, newRowIndex) {
+    if (newRow.status === "Yes") {
+      const newApprovedCodingData = { ...newRow };
+      delete newApprovedCodingData["approved_coding_id"];
+      const res = await createApprovedCoding({
+        variables: { record: newApprovedCodingData },
+      });
+      newRow.approved_coding_id = res.data.approved_codingsCreateOne.recordId;
+      const newCodings = input.answer.codings.map((row, index) =>
+        index === newRowIndex ? newRow : row
+      );
+      handleSave(newCodings);
+      // update all questionnaires
+    } else {
+      deleteApprovedCoding({ variables: { id: newRow.approved_coding_id } });
+      newRow.approved_coding_id = "";
+      const newCodings = input.answer.codings.map((row, index) =>
+        index === newRowIndex ? newRow : row
+      );
+      handleSave(newCodings);
+      // update all questionnaires
+    }
   }
 
   return (
@@ -66,20 +97,12 @@ export default function ({ input, close, save }) {
                   </TableHead>
                   <TableBody>
                     {input.answer.codings.map((row, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{row.referent}</TableCell>
-                        <TableCell>{row.meaning_value}</TableCell>
-                        <TableCell>{row.sr}</TableCell>
-                        <TableCell>{row.reflvl}</TableCell>
-                        <TableCell>{row.dim}</TableCell>
-                        <TableCell>{row.tr}</TableCell>
-                        <TableCell>{row.fr}</TableCell>
-                        <TableCell>{row.fe}</TableCell>
-                        <TableCell>{row.ss}</TableCell>
-                        <TableCell>{row.mm}</TableCell>
-                        <TableCell>{row.status}</TableCell>
-                        <TableCell>{row.comment}</TableCell>
-                      </TableRow>
+                      <CodingsRow
+                        key={index}
+                        row={row}
+                        index={index}
+                        save={changeApprovedCodingStatus}
+                      ></CodingsRow>
                     ))}
                   </TableBody>
                 </Table>

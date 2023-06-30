@@ -578,6 +578,15 @@ mutation {
   ]
         },
         {
+          type: text,
+          key: "comment"
+          mandatory: true
+          value: ""
+          min_num: ""
+          max_num: ""
+          dropdown_options: []
+        },
+        {
           type: dropdown,
           key: "status"
           mandatory: true
