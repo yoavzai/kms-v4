@@ -1,3 +1,3 @@
 import EditCodings from "./EditCodings";
-
-export default EditCodings;
+import CodingsRow from "./CodingsRow";
+export { EditCodings, CodingsRow };

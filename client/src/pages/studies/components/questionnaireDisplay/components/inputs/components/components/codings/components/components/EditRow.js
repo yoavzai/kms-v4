@@ -27,12 +27,6 @@ export default function ({ row, finish, cancel, codingsFields }) {
     finish(newRow);
   }
 
-  function handleSubmitApproved(approved) {
-    let newRow = { ...approved, approved_coding_id: approved._id };
-    delete newRow["_id"];
-    finish(newRow);
-  }
-
   const handleValueChange = (newValue, key) => {
     newValue = newValue.toString();
     const newformFields = formFields.map((field) => {

@@ -48,9 +48,10 @@ export default function ({ input, cancel, save }) {
         };
         save(newInput, newImage);
       };
+    } else {
+      const newInput = { ...input, answer: { ...input.answer, text: newText } };
+      save(newInput, null);
     }
-    const newInput = { ...input, answer: { ...input.answer, text: newText } };
-    save(newInput, null);
   }
 
   return (

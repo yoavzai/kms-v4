@@ -12,8 +12,8 @@ import {
 } from "./pages";
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
-import appReducer from "./redux";
 import { QuestionnaireDisplay, StudyDisplay } from "./pages/studies/components";
+import redux from "./redux";
 
 const client = new ApolloClient({
   uri: `${process.env.REACT_APP_BACKEND}`,
@@ -33,7 +33,7 @@ const client = new ApolloClient({
   },
 });
 
-const store = createStore(appReducer);
+const store = createStore(redux);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

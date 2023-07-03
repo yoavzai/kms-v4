@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import { GET_CODINGS_FIELDS } from "../../../../../../../../../queries/fields";
 import { useState } from "react";
 import { cleanPayload } from "../../../../../../../../../utils";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import {
   Button,
   Dialog,
@@ -16,16 +16,9 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import EditCodings from "./components";
-import CodingsRow from "./components/CodingsRow";
+import { EditCodings, CodingsRow } from "./components";
 
-export default function ({
-  input,
-  close,
-  save,
-  createApprovedCoding,
-  removeApprovedCoding,
-}) {
+export default function ({ input, close, save }) {
   useQuery(GET_CODINGS_FIELDS, { onCompleted: handleSetCodingsFields });
   const [codingsFields, setCodingsFields] = useState([]);
   const [isEditCodings, setIsEditCodings] = useState(false);
@@ -73,13 +66,7 @@ export default function ({
                   </TableHead>
                   <TableBody>
                     {input.answer.codings.map((row, index) => (
-                      <CodingsRow
-                        key={index}
-                        row={row}
-                        index={index}
-                        createApprovedCoding={createApprovedCoding}
-                        removeApprovedCoding={removeApprovedCoding}
-                      ></CodingsRow>
+                      <CodingsRow key={index} row={row}></CodingsRow>
                     ))}
                   </TableBody>
                 </Table>

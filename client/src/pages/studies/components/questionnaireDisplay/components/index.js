@@ -1,3 +1,3 @@
 import Inputs from "./inputs";
 
-export { Inputs };
+export default Inputs;

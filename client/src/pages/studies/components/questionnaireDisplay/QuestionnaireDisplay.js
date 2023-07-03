@@ -4,11 +4,13 @@ import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { cleanPayload } from "../../../../utils";
 import { QUESTIONNAIRE_BY_ID } from "../../../../queries/questionnaires";
-import { Inputs } from "./components";
+import Inputs from "./components";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function () {
   const { studyId, questionnaireId } = useParams();
-  const [questionnaire, setQuestionnaire] = useState({});
+  const questionnaire = useSelector((state) => state.questionnaire);
+  const dispatch = useDispatch();
   const [study, setStudy] = useState({});
   useQuery(STUDY_BASIC_DETAILS_BY_ID, {
     variables: { id: studyId },
@@ -26,7 +28,7 @@ export default function () {
 
   function handleSetQuestionnaire(data) {
     const payload = cleanPayload(data.questionnaireById);
-    setQuestionnaire(payload);
+    dispatch({ type: "questionnaire", payload: payload });
   }
 
   return (

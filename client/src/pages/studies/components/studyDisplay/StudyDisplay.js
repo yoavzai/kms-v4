@@ -12,10 +12,10 @@ export default function () {
   const [study, setStudy] = useState({});
   useQuery(STUDY_BY_ID, {
     variables: { id: studyId },
-    onCompleted: handleSetStudies,
+    onCompleted: handleSetStudy,
   });
 
-  function handleSetStudies(data) {
+  function handleSetStudy(data) {
     const payload = cleanPayload(data.studyById);
     setStudy(payload);
   }

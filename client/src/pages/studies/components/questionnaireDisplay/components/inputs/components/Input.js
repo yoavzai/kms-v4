@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   TextField,
 } from "@mui/material";
 import { Codings, EditInput } from "./components";
@@ -12,12 +11,7 @@ import { useQuery } from "@apollo/client";
 import { IMAGE_BY_ID } from "../../../../../../../queries/images";
 import { cleanPayload } from "../../../../../../../utils";
 
-export default function ({
-  input,
-  updateInput,
-  createApprovedCoding,
-  removeApprovedCoding,
-}) {
+export default function ({ input, updateInputs }) {
   const [isDisplayImage, setIsDisplayImage] = useState(false);
   const [isDisplayCodings, setIsDisplayCodings] = useState(false);
   const [isEditInput, setIsEditInput] = useState(false);
@@ -44,7 +38,7 @@ export default function ({
     if (newImage) {
       setImage(newImage);
     }
-    updateInput(newInput);
+    updateInputs(newInput);
     setIsEditInput(false);
   }
 
@@ -77,8 +71,6 @@ export default function ({
           input={input}
           close={handleCloseCodings}
           save={handleSave}
-          createApprovedCoding={createApprovedCoding}
-          removeApprovedCoding={removeApprovedCoding}
         ></Codings>
       )}
       {isEditInput && (
