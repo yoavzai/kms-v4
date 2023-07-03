@@ -1,14 +1,26 @@
 import { Checkbox, TableCell, TableRow } from "@mui/material";
 import { useState } from "react";
 
-export default function ({ row, index, save }) {
+export default function ({
+  row,
+  index,
+  createApprovedCoding,
+  removeApprovedCoding,
+}) {
   const [rowData, setRowData] = useState({ ...row });
 
   function handleStatusChange(e) {
-    const checked = e.target.checked;
-    const newRow = { ...rowData, status: checked ? "Yes" : "No", comment: "" };
-    save(newRow, index);
-    setRowData(newRow);
+    if (e.target.checked) {
+      const newRow = { ...rowData, status: "Yes", comment: "" };
+      const approvedCoding = { ...newRow };
+      delete approvedCoding["approved_coding_id"];
+      createApprovedCoding(approvedCoding);
+      setRowData(newRow);
+    } else {
+      removeApprovedCoding(rowData.approved_coding_id);
+      const newRow = { ...rowData, approved_coding_id: "", status: "No" };
+      setRowData(newRow);
+    }
   }
 
   return (

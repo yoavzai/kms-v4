@@ -18,15 +18,15 @@ import {
 } from "@mui/material";
 import EditCodings from "./components";
 import CodingsRow from "./components/CodingsRow";
-import {
-  CREATE_APPROVED_CODING,
-  DELETE_APPROVED_CODING_BY_ID,
-} from "../../../../../../../../../mutations/codings";
 
-export default function ({ input, close, save }) {
+export default function ({
+  input,
+  close,
+  save,
+  createApprovedCoding,
+  removeApprovedCoding,
+}) {
   useQuery(GET_CODINGS_FIELDS, { onCompleted: handleSetCodingsFields });
-  const [createApprovedCoding] = useMutation(CREATE_APPROVED_CODING);
-  const [deleteApprovedCoding] = useMutation(DELETE_APPROVED_CODING_BY_ID);
   const [codingsFields, setCodingsFields] = useState([]);
   const [isEditCodings, setIsEditCodings] = useState(false);
 
@@ -46,30 +46,6 @@ export default function ({ input, close, save }) {
 
   function handleCancelEdit() {
     setIsEditCodings(false);
-  }
-
-  async function changeApprovedCodingStatus(newRow, newRowIndex) {
-    if (newRow.status === "Yes") {
-      const newApprovedCodingData = { ...newRow };
-      delete newApprovedCodingData["approved_coding_id"];
-      const res = await createApprovedCoding({
-        variables: { record: newApprovedCodingData },
-      });
-      newRow.approved_coding_id = res.data.approved_codingsCreateOne.recordId;
-      const newCodings = input.answer.codings.map((row, index) =>
-        index === newRowIndex ? newRow : row
-      );
-      handleSave(newCodings);
-      // update all questionnaires
-    } else {
-      deleteApprovedCoding({ variables: { id: newRow.approved_coding_id } });
-      newRow.approved_coding_id = "";
-      const newCodings = input.answer.codings.map((row, index) =>
-        index === newRowIndex ? newRow : row
-      );
-      handleSave(newCodings);
-      // update all questionnaires
-    }
   }
 
   return (
@@ -101,7 +77,8 @@ export default function ({ input, close, save }) {
                         key={index}
                         row={row}
                         index={index}
-                        save={changeApprovedCodingStatus}
+                        createApprovedCoding={createApprovedCoding}
+                        removeApprovedCoding={removeApprovedCoding}
                       ></CodingsRow>
                     ))}
                   </TableBody>

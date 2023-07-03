@@ -27,3 +27,17 @@ export const UPDATE_QUESTIONNAIRE_BY_ID = gql`
     }
   }
 `;
+export const UPDATE_QUESTIONNAIRES_NEW_APPROVED_CODING = gql`
+  mutation UpdateQuestionnairesNewApprovedCoding($newCoding: CodingInput!) {
+    updateQuestionnairesNewApprovedCoding(newCoding: $newCoding) {
+      recordIds
+    }
+  }
+`;
+export const UPDATE_QUESTIONNAIRES_REMOVE_APPROVED_CODING = gql`
+  mutation UpdateQuestionnairesRemoveApprovedCoding($id: String!) {
+    updateQuestionnairesRemoveApprovedCoding(id: $id) {
+      recordIds
+    }
+  }
+`;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -12,8 +12,12 @@ import { useQuery } from "@apollo/client";
 import { IMAGE_BY_ID } from "../../../../../../../queries/images";
 import { cleanPayload } from "../../../../../../../utils";
 
-export default function ({ input, updateInput }) {
-  const [currentInput, setCurrentInput] = useState({ ...input });
+export default function ({
+  input,
+  updateInput,
+  createApprovedCoding,
+  removeApprovedCoding,
+}) {
   const [isDisplayImage, setIsDisplayImage] = useState(false);
   const [isDisplayCodings, setIsDisplayCodings] = useState(false);
   const [isEditInput, setIsEditInput] = useState(false);
@@ -40,22 +44,21 @@ export default function ({ input, updateInput }) {
     if (newImage) {
       setImage(newImage);
     }
-    setCurrentInput(newInput);
     updateInput(newInput);
     setIsEditInput(false);
   }
 
   return (
     <div>
-      <h4>{currentInput.name}</h4>
+      <h4>{input.name}</h4>
       <TextField
         inputProps={{ readOnly: true }}
-        value={currentInput.answer.text}
+        value={input.answer.text}
       ></TextField>
       <div>
         <Button onClick={() => setIsEditInput(true)}>edit</Button>
         <Button onClick={() => setIsDisplayCodings(true)}>codings</Button>
-        {currentInput.answer.image_id.length > 0 && (
+        {input.answer.image_id.length > 0 && (
           <Button onClick={() => setIsDisplayImage(true)}>image</Button>
         )}
       </div>
@@ -71,14 +74,16 @@ export default function ({ input, updateInput }) {
       )}
       {isDisplayCodings && (
         <Codings
-          input={currentInput}
+          input={input}
           close={handleCloseCodings}
           save={handleSave}
+          createApprovedCoding={createApprovedCoding}
+          removeApprovedCoding={removeApprovedCoding}
         ></Codings>
       )}
       {isEditInput && (
         <EditInput
-          input={currentInput}
+          input={input}
           cancel={handleCancelEdit}
           save={handleSave}
         ></EditInput>

@@ -45,4 +45,5 @@ const QuestionnaireModel = mongoose.model("Questionnaire", QuestionnaireSchema);
 module.exports = {
   QuestionnaireModel,
   input_template,
+  coding_template,
 };
