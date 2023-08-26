@@ -7,22 +7,19 @@ import {
   UPDATE_STUDY_BY_ID,
 } from "../../../../mutations/studies";
 import { List } from "@mui/material";
-import StudyListItem from "./components";
+import StudyListItem from "./StudyListItem";
 
 export default function () {
+  const [studies, setStudies] = useState([]);
+
   const userId = window.sessionStorage.getItem("userId");
+
   useQuery(STUDIES_BY_CREATOR_ID, {
     variables: { creator_id: userId },
-    onCompleted: handleSetStudies,
+    onCompleted: ({ studyMany }) => setStudies(cleanPayload(studyMany)),
   });
-  const [studies, setStudies] = useState([]);
   const [updateStudy] = useMutation(UPDATE_STUDY_BY_ID);
   const [deleteStudy] = useMutation(DELETE_STUDY_BY_ID);
-
-  function handleSetStudies(data) {
-    const payload = cleanPayload(data.studyMany);
-    setStudies(payload);
-  }
 
   async function handleUpdateStudy(studyId, studyNewData) {
     await updateStudy({ variables: { id: studyId, record: studyNewData } });

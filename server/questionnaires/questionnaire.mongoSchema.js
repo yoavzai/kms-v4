@@ -1,8 +1,22 @@
 const { mongoose } = require("mongoose");
-const {
-  coding_template,
-} = require("../approved_codings/approved_codings.mongoSchema");
 const { field_template } = require("../fields/fields.mongoSchema");
+
+const coding_template = {
+  _id: false,
+  approved_coding_id: String,
+  referent: String,
+  meaning_value: String,
+  sr: String,
+  reflvl: String,
+  dim: String,
+  tr: String,
+  fr: String,
+  fe: String,
+  ss: String,
+  mm: String,
+  comment: String,
+  status: String,
+};
 
 const input_template = {
   _id: false,
@@ -31,4 +45,5 @@ const QuestionnaireModel = mongoose.model("Questionnaire", QuestionnaireSchema);
 module.exports = {
   QuestionnaireModel,
   input_template,
+  coding_template,
 };

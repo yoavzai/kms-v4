@@ -26,6 +26,6 @@
     "write-excel-file": "^1.4.24"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^1.14.9"
   }
 }

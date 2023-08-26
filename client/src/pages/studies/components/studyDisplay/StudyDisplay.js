@@ -3,7 +3,8 @@ import { useState } from "react";
 import { cleanPayload } from "../../../../utils";
 import { useParams } from "react-router-dom";
 import { Button, Dialog, DialogContent } from "@mui/material";
-import { QuestionnairesBrowser, NewQuestionnaireWizard } from "./components";
+import QuestionnairesBrowser from "./QuestionnairesBrowser";
+import NewQuestionnaireWizard from "./NewQuestionnaireWizard";
 import { useQuery } from "@apollo/client";
 
 export default function () {
@@ -12,21 +13,8 @@ export default function () {
   const [study, setStudy] = useState({});
   useQuery(STUDY_BY_ID, {
     variables: { id: studyId },
-    onCompleted: handleSetStudies,
+    onCompleted: ({ studyById }) => setStudy(cleanPayload(studyById)),
   });
-
-  function handleSetStudies(data) {
-    const payload = cleanPayload(data.studyById);
-    setStudy(payload);
-  }
-
-  function handleNewQuestionnaireBtnClick() {
-    setIsNewQuestionnaire(true);
-  }
-
-  function handleCancelNewQuestionnaire() {
-    setIsNewQuestionnaire(false);
-  }
 
   return (
     <>
@@ -45,7 +33,7 @@ export default function () {
             })}
             <h2>Questionnaires</h2>
             <QuestionnairesBrowser studyId={studyId}></QuestionnairesBrowser>
-            <Button onClick={handleNewQuestionnaireBtnClick}>
+            <Button onClick={() => setIsNewQuestionnaire(true)}>
               New Questionnaire
             </Button>
           </div>
@@ -54,7 +42,7 @@ export default function () {
               <Dialog open>
                 <DialogContent>
                   <NewQuestionnaireWizard
-                    cancelNewQuestionnaire={handleCancelNewQuestionnaire}
+                    cancelNewQuestionnaire={() => setIsNewQuestionnaire(false)}
                     study={study}
                   ></NewQuestionnaireWizard>
                 </DialogContent>

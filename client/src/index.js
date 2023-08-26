@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   Homepage,
   LoginPage,
@@ -12,14 +12,12 @@ import {
 } from "./pages";
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
-import appReducer from "./redux";
 import { QuestionnaireDisplay, StudyDisplay } from "./pages/studies/components";
+import redux from "./redux";
 
 import {  createTheme, ThemeProvider } from '@mui/material/styles';
 import AppBar from './components/AppBar'
 
-
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 const client = new ApolloClient({
@@ -40,7 +38,7 @@ const client = new ApolloClient({
   },
 });
 
-const store = createStore(appReducer);
+const store = createStore(redux);
 
 const theme = createTheme({
   palette: {

@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import { StudiesBrowser, NewStudyWizard } from "./components";
 import { Button } from "@mui/material";
 
-export default function () {
+export default function StudiesPage() {
   const [open, flip] = useReducer(s => !s, false);
 
   return (

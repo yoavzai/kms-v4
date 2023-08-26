@@ -18,7 +18,8 @@ import { cleanPayload } from "../../../../utils";
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
 import Add from '@mui/icons-material/Add';
-import { Summary, Alert } from './components';
+import Alert from './Alert';
+import Summary from './summary';
 
 const steps = [
   "Study details",
@@ -27,7 +28,7 @@ const steps = [
   "Summary",
 ];
 
-export default function ({ isOpen, cancelNewStudy }) {
+export default function NewStudyWizard({ isOpen, cancelNewStudy }) {
   // const [state, setState] = useReducer(reducer, { 
   const [state, setState] = useState({ 
     ["Study details"]: [],

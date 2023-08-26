@@ -63,7 +63,7 @@ export const QUESTIONNAIRE_BY_ID = gql`
           text
           image_id
           codings {
-            _id
+            approved_coding_id
             referent
             meaning_value
             sr
@@ -75,6 +75,7 @@ export const QUESTIONNAIRE_BY_ID = gql`
             ss
             mm
             comment
+            status
           }
         }
       }
